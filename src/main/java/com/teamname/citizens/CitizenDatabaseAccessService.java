@@ -1,8 +1,12 @@
 package com.teamname.citizens;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class CitizenDatabaseAccessService implements CitizensDAO {
 
     private JdbcTemplate jdbcTemplate;
@@ -10,8 +14,6 @@ public class CitizenDatabaseAccessService implements CitizensDAO {
     public CitizenDatabaseAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
-
 
     @Override
     public List<Citizens> selectAllCitizens() {
