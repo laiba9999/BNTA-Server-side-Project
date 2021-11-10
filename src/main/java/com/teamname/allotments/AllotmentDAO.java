@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface AllotmentDAO {
     List<Allotment> selectAllAllotments();
-    Optional<Allotment> selectAllotmentById();
-    int createAllotment();
+    Optional<Allotment> selectAllotmentById(int id);
+    int createAllotment(Allotment allotment);
 }

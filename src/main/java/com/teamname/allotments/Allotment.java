@@ -7,6 +7,9 @@ public class Allotment {
         this.id = id;
     }
 
+    public Allotment() {
+    }
+
     public Integer getId() {
         return id;
     }

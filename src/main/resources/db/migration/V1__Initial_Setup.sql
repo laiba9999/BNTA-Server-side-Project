@@ -1,0 +1,3 @@
+CREATE TABLE allotments(
+    id SERIAL PRIMARY KEY NOT NULL
+    );
