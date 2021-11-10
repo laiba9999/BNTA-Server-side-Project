@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/citizens")
-public class CitizensController {
-    private CitizensService citizensService;
+public class CitizenController {
+    private CitizenService citizenService;
 
     @Autowired
-    public CitizensController(CitizensService citizensService) {
-        this.citizensService = citizensService;
+    public CitizenController(CitizenService citizenService) {
+        this.citizenService = citizenService;
     }
 }

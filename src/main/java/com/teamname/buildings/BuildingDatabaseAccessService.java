@@ -1,5 +1,6 @@
-package com.teamname.citizens;
+package com.teamname.buildings;
 
+import com.teamname.citizens.Citizen;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -7,36 +8,35 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class CitizenDatabaseAccessService implements CitizenDAO {
-
+public class BuildingDatabaseAccessService implements BuildingDAO {
     private JdbcTemplate jdbcTemplate;
 
-    public CitizenDatabaseAccessService(JdbcTemplate jdbcTemplate) {
+    public BuildingDatabaseAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+    
     @Override
-    public List<Citizen> selectAllCitizens() {
+    public List<Building> selectAllBuildings() {
         return null;
     }
 
     @Override
-    public Optional<Citizen> selectPersonById() {
+    public Optional<Building> selectBuildingById() {
         return Optional.empty();
     }
 
     @Override
-    public int insertCitizen(Citizen citizen) {
+    public int insertBuilding(Citizen citizen) {
         return 0;
     }
 
     @Override
-    public int deleteCitizen(int id) {
+    public int deleteBuilding(int id) {
         return 0;
     }
 
     @Override
-    public int updateCitizen(Citizen citizen) {
+    public int updateBuilding(Citizen citizen) {
         return 0;
     }
 }

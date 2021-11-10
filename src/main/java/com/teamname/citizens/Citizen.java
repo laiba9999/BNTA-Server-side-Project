@@ -1,12 +1,12 @@
 package com.teamname.citizens;
 
-public class Citizens {
+public class Citizen {
     private Integer id;
     private String fullName;
     private Integer home_id;
     private Integer workplace_id;
 
-    public Citizens(Integer id, String fullName, Integer home_id, Integer workplace_id) {
+    public Citizen(Integer id, String fullName, Integer home_id, Integer workplace_id) {
         this.id = id;
         this.fullName = fullName;
         this.home_id = home_id;
