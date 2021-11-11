@@ -1,8 +1,5 @@
 package com.teamname.buildings.workplaces;
 
-import com.teamname.allotments.Allotment;
-import com.teamname.buildings.houses.House;
-import com.teamname.buildings.houses.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/buildings/workplace")
+@RequestMapping("/buildings/workplaces")
 public class WorkplaceController {
 
     private WorkplaceService workplaceService;

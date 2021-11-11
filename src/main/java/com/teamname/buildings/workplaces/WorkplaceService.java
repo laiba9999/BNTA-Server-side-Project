@@ -1,7 +1,5 @@
 package com.teamname.buildings.workplaces;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,12 +7,11 @@ import java.util.Optional;
 
 @Service
 public class WorkplaceService {
-
     private WorkplaceDAO workplaceDAO;
 
-    @Autowired
+
     public WorkplaceService(WorkplaceDAO workplaceDAO) {
-        this.workplaceDAO = workplaceDAO ;
+        this.workplaceDAO = workplaceDAO;
     }
 
     public List<Workplace> getAllWorkplace() {

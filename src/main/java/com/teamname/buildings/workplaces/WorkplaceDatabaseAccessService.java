@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public abstract class WorkplaceDatabaseAccessService implements WorkplaceDAO {
+public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     private JdbcTemplate jdbcTemplate;
 
     public WorkplaceDatabaseAccessService(JdbcTemplate jdbcTemplate){
@@ -49,7 +49,7 @@ public abstract class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int createWorkplace(Workplace workplace){
         String sql = """
-                INSERT INTO workplace 
+                INSERT INTO workplace
                 (buildingName, capacity, allotment_id)
                 VALUES
                 (?, ?, ?)
@@ -71,10 +71,10 @@ public abstract class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int updateWorkplace(int id, Workplace workplace){
         String sql = """
-                UPDATE workplace 
+                UPDATE workplace
                 SET buildingName = ?, capacity = ? , allotment_id = ?
                 WHERE id = ?
-                ; 
+                ;
                 """;
         return jdbcTemplate.update(sql, workplace.getBuildingName(), workplace.getCapacity(), workplace.getAllotment_id(), id);
     }
