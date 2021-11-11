@@ -1,0 +1,10 @@
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Hahn-Torp', 16, 10);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Leffler-Mueller', 10, 3);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Treutel, Konopelski and Schneider', 17, 7);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Cruickshank Inc', 80, 10);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Aufderhar, Leannon and Hahn', 181, 8);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Lynch and Sons', 174, 6);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Herman-Stoltenberg', 162, 9);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Beatty and Sons', 21, 9);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Leffler and Sons', 110, 7);
+INSERT INTO workplaces (buildingName, capacity, allotment_id) values ('Mayert Inc', 39, 1);

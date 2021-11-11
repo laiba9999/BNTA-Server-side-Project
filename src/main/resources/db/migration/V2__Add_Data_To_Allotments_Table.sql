@@ -1,0 +1,10 @@
+INSERT INTO allotments(id) VALUES (1);
+INSERT INTO allotments(id) VALUES (2);
+INSERT INTO allotments(id) VALUES (3);
+INSERT INTO allotments(id) VALUES (4);
+INSERT INTO allotments(id) VALUES (5);
+INSERT INTO allotments(id) VALUES (6);
+INSERT INTO allotments(id) VALUES (7);
+INSERT INTO allotments(id) VALUES (8);
+INSERT INTO allotments(id) VALUES (9);
+INSERT INTO allotments(id) VALUES (10);

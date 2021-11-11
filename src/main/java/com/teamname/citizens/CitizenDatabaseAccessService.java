@@ -24,8 +24,8 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
             Citizen citizen = new Citizen(
                     rs.getInt("id"),
-                    rs.getString("fullname"),
-                    rs.getInt("home_id"),
+                    rs.getString("fullName"),
+                    rs.getInt("house_id"),
                     rs.getInt("workplace_id"));
             return citizen;
         }
@@ -57,13 +57,13 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     @Override
     public int insertCitizen(Citizen citizen) {
         String sql = """
-                INSERT INTO citizens (fullname, home_id, workplace_id)
+                INSERT INTO citizens (fullName, house_id, workplace_id)
                 VALUES (?, ?, ?);
                 """;
         return jdbcTemplate.update(
                 sql,
                 citizen.getFullName(),
-                citizen.getHome_id(),
+                citizen.getHouse_id(),
                 citizen.getWorkplace_id());
     }
 
@@ -80,13 +80,13 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     public int updateCitizen(Integer id, Citizen citizen) {
         String sql = """
                 UPDATE citizens 
-                SET fullname = ?, home_id = ?, workplace_id = ?
+                SET fullName = ?, house_id = ?, workplace_id = ?
                 WHERE id = ?;
                 """;
         return jdbcTemplate.update(
                 sql,
                 citizen.getFullName(),
-                citizen.getHome_id(),
+                citizen.getHouse_id(),
                 citizen.getWorkplace_id(),
                 id);
     }
