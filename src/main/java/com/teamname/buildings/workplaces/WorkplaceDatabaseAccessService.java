@@ -29,8 +29,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public List<Workplace> selectAllWorkplace(){
         String sql = """
-                SELECT id
-                FROM workplaces;
+                SELECT * FROM workplaces;
                 """;
         List<Workplace> workplace = jdbcTemplate.query(sql, rowMapper);
         return workplace;
@@ -39,7 +38,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public Optional<Workplace> selectWorkplaceById(int id){
         String sql = """
-                SELECT id
+                SELECT *
                 FROM workplaces
                 WHERE id = ?;
                 """;
