@@ -8,5 +8,5 @@ public interface HouseDAO {
     Optional<House> selectHouseById(int id);
     int createHouse(House house);
     int deleteHouse(int id);
-    int updateHouse(House house);
+    int updateHouse(int id, House house);
 }

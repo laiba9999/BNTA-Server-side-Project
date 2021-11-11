@@ -27,5 +27,12 @@ public class HouseController {
     }
 
     @PostMapping
-    public void createAllotment(@RequestBody House house) {houseService.createHouse(house);}
+    public void createHouse(@RequestBody House house) {houseService.createHouse(house);}
+
+    @DeleteMapping("{id}")
+    public void deleteHouse(@PathVariable("id") int id){houseService.deleteHouse(id);}
+
+//    Update request is Put request in REST API terms
+    @PutMapping("{id}")
+    public void updateHouse(@PathVariable("id") int id, @RequestBody House house){houseService.updateHouse(id,house);}
 }

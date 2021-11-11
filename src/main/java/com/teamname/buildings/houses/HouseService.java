@@ -25,4 +25,12 @@ public class HouseService {
 
     public void createHouse(House house) {houseDAO.createHouse(house);
     }
+
+    public void deleteHouse(int id) {
+        houseDAO.deleteHouse(id);
+    }
+
+    public void updateHouse(int id, House house) {
+        houseDAO.updateHouse(id, house);
+    }
 }

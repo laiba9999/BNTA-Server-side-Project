@@ -1,9 +1,6 @@
 package com.teamname.buildings.workplaces;
 
-import com.teamname.allotments.Allotment;
-import com.teamname.allotments.AllotmentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Service;
 

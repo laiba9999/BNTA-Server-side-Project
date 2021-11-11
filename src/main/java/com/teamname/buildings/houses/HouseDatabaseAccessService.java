@@ -30,30 +30,34 @@ public class HouseDatabaseAccessService implements HouseDAO {
 
     @Override
     public List<House> selectAllHouses() {
-        String sql = "SELECT * FROM houses";
+        String sql = "SELECT * FROM houses;";
         var houses = jdbcTemplate.query(sql, rowMapper);
         return houses;
     }
 
     @Override
     public Optional<House> selectHouseById(int id) {
-        String sql = "SELECT id FROM houses WHERE id = ?";
+        String sql = "SELECT * FROM houses WHERE id = ?;";
         return jdbcTemplate.query(sql,rowMapper, id).stream().findFirst();
     }
 
     @Override
     public int createHouse(House house) {
-        String sql = "INSERT into HOUSES (buildingName, capacity, allotment_id) VALUES (?,?,?)";
+        String sql = "INSERT into houses (buildingName, capacity, allotment_id) VALUES (?,?,?);";
         return jdbcTemplate.update(sql, house.getBuildingName(),house.getCapacity(),house.getAllotment_id());
     }
 
     @Override
     public int deleteHouse(int id) {
-        return 0;
+        String sql = "DELETE FROM houses WHERE id = ?;";
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public int updateHouse(House house) {
-        return 0;
+    public int updateHouse(int id, House house) {
+//        Todo check allotment is full before updating
+        String sql = "UPDATE houses SET buildingName = ?, capacity = ?, allotment_id = ? WHERE id = ?;";
+
+        return jdbcTemplate.update(sql, house.getBuildingName(),house.getCapacity(),house.getAllotment_id(),id);
     }
 }
