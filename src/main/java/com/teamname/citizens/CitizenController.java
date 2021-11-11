@@ -30,4 +30,14 @@ public class CitizenController {
     public void insertCitizen(@RequestBody Citizen citizen) {
         citizenService.insertCitizen(citizen);
     }
+
+    @DeleteMapping("{id}")
+    public void deleteCitizen(@PathVariable("id") @RequestBody Integer id) {
+        citizenService.deleteCitizen(id);
+    }
+
+    @PutMapping("{id}")
+    public void updateCitizen(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
+        citizenService.updateCitizen(id, citizen);
+    }
 }

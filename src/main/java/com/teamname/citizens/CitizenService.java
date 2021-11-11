@@ -21,10 +21,18 @@ public class CitizenService {
     }
 
     public Optional<Citizen> getCitizenById(Integer id) {
-        return citizenDAO.selectPersonById(id);
+        return citizenDAO.selectCitizenById(id);
     }
 
     public void insertCitizen(Citizen citizen) {
         citizenDAO.insertCitizen(citizen);
+    }
+
+    public void deleteCitizen(Integer id) {
+        citizenDAO.deleteCitizen(id);
+    }
+
+    public void updateCitizen(Integer id, Citizen citizen) {
+        citizenDAO.updateCitizen(id, citizen);
     }
 }

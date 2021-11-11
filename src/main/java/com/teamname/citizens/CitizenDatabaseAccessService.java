@@ -42,7 +42,7 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     }
 
     @Override
-    public Optional<Citizen> selectPersonById(Integer id) {
+    public Optional<Citizen> selectCitizenById(Integer id) {
         String sql = """
                 SELECT *
                 FROM citizens
@@ -69,11 +69,25 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
 
     @Override
     public int deleteCitizen(int id) {
-        return 0;
+        String sql = """
+                DELETE FROM citizens
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public int updateCitizen(Citizen citizen) {
-        return 0;
+    public int updateCitizen(Integer id, Citizen citizen) {
+        String sql = """
+                UPDATE citizens 
+                SET fullname = ?, home_id = ?, workplace_id = ?
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(
+                sql,
+                citizen.getFullName(),
+                citizen.getHome_id(),
+                citizen.getWorkplace_id(),
+                id);
     }
 }
