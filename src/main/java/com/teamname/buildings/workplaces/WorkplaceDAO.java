@@ -8,6 +8,6 @@ public interface WorkplaceDAO {
     Optional<Workplace> selectWorkplaceById(int id);
     int createWorkplace (Workplace workplace);
     int deleteWorkplace (int id);
-    int updateWorkplace (int id);
+    int updateWorkplace (int id, Workplace workplace);
 
 }

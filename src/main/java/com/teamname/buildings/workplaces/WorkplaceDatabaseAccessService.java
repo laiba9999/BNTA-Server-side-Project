@@ -49,20 +49,34 @@ public abstract class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int createWorkplace(Workplace workplace){
         String sql = """
-                INSERT INTO allotment 
-                (id) values (?);
+                INSERT INTO workplace 
+                (buildingName, capacity, allotment_id)
+                VALUES
+                (?, ?, ?)
+                ;
                 """;
-        return jdbcTemplate.update(sql, workplace.getId());
+        return jdbcTemplate.update(sql, workplace.getBuildingName(), workplace.getCapacity(), workplace.getAllotment_id());
     }
 
     @Override
     public int deleteWorkplace(int id){
-        return 0;
+        String sql = """
+                DELETE FROM workplace
+                WHERE id = ?
+                ;
+                """;
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public int updateWorkplace(int id) {
-        return 0;
+    public int updateWorkplace(int id, Workplace workplace){
+        String sql = """
+                UPDATE workplace 
+                SET buildingName = ?, capacity = ? , allotment_id = ?
+                WHERE id = ?
+                ; 
+                """;
+        return jdbcTemplate.update(sql, workplace.getBuildingName(), workplace.getCapacity(), workplace.getAllotment_id(), id);
     }
 
 }

@@ -16,8 +16,8 @@ public class WorkplaceService {
     private WorkplaceDAO workplaceDAO;
 
     @Autowired
-    public WorkplaceService(AllotmentDAO allotmentDAO) {
-        this.workplaceDAO = workplaceDAO;
+    public WorkplaceService(WorkplaceDAO workplaceDAO) {
+        this.workplaceDAO = workplaceDAO ;
     }
 
     public List<Workplace> getAllWorkplace() {
@@ -36,8 +36,8 @@ public class WorkplaceService {
         workplaceDAO.deleteWorkplace(id);
     }
 
-    public void updateWorkplace(int id){
-        workplaceDAO.updateWorkplace(id);
+    public void updateWorkplace(int id, Workplace workplace){
+        workplaceDAO.updateWorkplace(id, workplace);
     }
 
 
