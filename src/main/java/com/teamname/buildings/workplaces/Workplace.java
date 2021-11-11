@@ -1,8 +1,16 @@
-package com.teamname.buildings;
+package com.teamname.buildings.workplaces;
 
-public class Workplace extends Building{
+import com.teamname.buildings.Building;
+
+public class Workplace extends Building {
 
     public Workplace(Integer id, String buildingName, Integer capacity, Integer allotment_id) {
         super(id, buildingName, capacity, allotment_id);
     }
+
+
+
+
+
+
 }
