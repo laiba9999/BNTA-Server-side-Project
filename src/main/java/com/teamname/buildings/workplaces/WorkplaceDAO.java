@@ -9,5 +9,4 @@ public interface WorkplaceDAO {
     int createWorkplace (Workplace workplace);
     int deleteWorkplace (int id);
     int updateWorkplace (int id, Workplace workplace);
-
 }

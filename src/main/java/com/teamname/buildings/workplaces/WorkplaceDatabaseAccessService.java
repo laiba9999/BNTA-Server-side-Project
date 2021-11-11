@@ -30,7 +30,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     public List<Workplace> selectAllWorkplace(){
         String sql = """
                 SELECT id
-                FROM workplace;
+                FROM workplaces;
                 """;
         List<Workplace> workplace = jdbcTemplate.query(sql, rowMapper);
         return workplace;
@@ -40,7 +40,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     public Optional<Workplace> selectWorkplaceById(int id){
         String sql = """
                 SELECT id
-                FROM workplace
+                FROM workplaces
                 WHERE id = ?;
                 """;
         return jdbcTemplate.query(sql, rowMapper, id).stream().findFirst();
@@ -49,7 +49,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int createWorkplace(Workplace workplace){
         String sql = """
-                INSERT INTO workplace
+                INSERT INTO workplaces
                 (buildingName, capacity, allotment_id)
                 VALUES
                 (?, ?, ?)
@@ -61,7 +61,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int deleteWorkplace(int id){
         String sql = """
-                DELETE FROM workplace
+                DELETE FROM workplaces
                 WHERE id = ?
                 ;
                 """;
@@ -71,7 +71,7 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
     @Override
     public int updateWorkplace(int id, Workplace workplace){
         String sql = """
-                UPDATE workplace
+                UPDATE workplaces
                 SET buildingName = ?, capacity = ? , allotment_id = ?
                 WHERE id = ?
                 ;

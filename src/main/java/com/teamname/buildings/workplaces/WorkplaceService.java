@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WorkplaceService {
+public class WorkplaceService{
     private WorkplaceDAO workplaceDAO;
 
 
