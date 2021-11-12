@@ -6,9 +6,6 @@ with an MVP of allowing users to make `GET` and `Post` requests.
 Our application utilises the tech stacks Java, Spring and PostgreSQL to allows users to store information using CRUD operations.
 We had dependencies such as Flyway for version control of our database along with JDBC API so that we can connect and access the database.
 We used Hikari datasource as the connection pool mechanism as it is lightweight and better performing.
-<br/>
-During the project, we came accross some challenges such as getting errors when creating the database and tables along with some 
-connectivity issues between our Java classes which we managed to debug using online resources such as StackOverflow.
 
 ## Table Of Contents
 
