@@ -90,4 +90,17 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
                 citizen.getWorkplace_id(),
                 id);
     }
+
+    @Override
+    public int updateCitizen(Integer id, Integer house_id) {
+        String sql = """
+                UPDATE citizens 
+                SET house_id = ?
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(
+                sql,
+                house_id,
+                id);
+    }
 }

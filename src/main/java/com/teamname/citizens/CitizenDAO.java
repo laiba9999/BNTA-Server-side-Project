@@ -9,4 +9,5 @@ public interface CitizenDAO {
     int insertCitizen(Citizen citizen);
     int deleteCitizen(int id);
     int updateCitizen(Integer id, Citizen citizen);
+    int updateCitizen(Integer id, Integer house_id);
 }
