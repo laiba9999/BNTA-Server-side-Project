@@ -1,5 +1,7 @@
 package com.teamname.citizens;
 
+import java.util.Objects;
+
 public class Citizen {
     private Integer id;
     private String fullName;
