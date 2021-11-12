@@ -20,7 +20,7 @@ public class AllotmentDatabaseAccessService implements AllotmentDAO {
     RowMapper rowMapper = new RowMapper() {
         @Override
         public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Allotment allotment = new Allotment(rs.getInt("id"));
+            Allotment allotment = new Allotment(rs.getInt("id"),rs.getInt("x_coordinate"),rs.getString("y_coordinate"));
             return allotment;
         }
     };
@@ -28,7 +28,7 @@ public class AllotmentDatabaseAccessService implements AllotmentDAO {
     @Override
     public List<Allotment> selectAllAllotments() {
         String sql = """
-                SELECT id 
+                SELECT * 
                 FROM allotments;
                 """;
         var allotments = jdbcTemplate.query(sql, rowMapper);
@@ -38,7 +38,7 @@ public class AllotmentDatabaseAccessService implements AllotmentDAO {
     @Override
     public Optional<Allotment> selectAllotmentById(int id) {
         String sql = """
-                SELECT id
+                SELECT *
                 FROM allotments
                 WHERE id = ?;
                 """;
@@ -47,8 +47,8 @@ public class AllotmentDatabaseAccessService implements AllotmentDAO {
 
     @Override
     public int createAllotment(Allotment allotment) {
-        String sql = "insert into allotments (id) values (?);";
-         return jdbcTemplate.update(sql, allotment.getId());
+        String sql = "insert into allotments (x_coordinate,y_coordinate) values (?,?);";
+         return jdbcTemplate.update(sql, allotment.getX_coordinate(), allotment.getY_coordinate());
 
     }
 }
