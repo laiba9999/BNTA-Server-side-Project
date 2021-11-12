@@ -14,20 +14,15 @@ import java.util.List;
 @RequestMapping("/buildings")
 public class BuildingController {
 
-    private HouseService houseService;
-    private WorkplaceService workplaceService;
+    private BuildingService buildingService;
 
     @Autowired
-    public BuildingController(HouseService houseService, WorkplaceService workplaceService) {
-        this.houseService = houseService;
-        this.workplaceService = workplaceService;
+    public BuildingController(BuildingService buildingService) {
+        this.buildingService = buildingService;
     }
 
     @GetMapping
     public List<Building> getAllBuildings(){
-        List<Building> buildings = new ArrayList<>();
-        houseService.getAllHouses().forEach(house -> buildings.add(house));
-        workplaceService.getAllWorkplace().forEach(workplace -> buildings.add(workplace));
-        return buildings;
+        return buildingService.getAllBuildings();
     }
 }
