@@ -32,7 +32,6 @@ We created models for our relational database to help structure the information 
 ### Classes Model
 We had a discussion about the possible classes that we would need including their fields, data type, and methods. Then modelled it using the website Miro.
 
-
 **Citizen Classes**
 ![Image of the classes model](/documentation_images/Miro-Citizen-Class-Model.png)
 
