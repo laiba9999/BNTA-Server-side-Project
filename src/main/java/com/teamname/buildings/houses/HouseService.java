@@ -1,5 +1,6 @@
 package com.teamname.buildings.houses;
 
+import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class HouseService {
     }
 
     public Optional<House> getHouseById(int id) {
+        if(houseDAO.selectHouseById(id).isEmpty()){
+            throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
+        }
         return houseDAO.selectHouseById(id);
     }
 
@@ -27,10 +31,16 @@ public class HouseService {
     }
 
     public void deleteHouse(int id) {
+        if(houseDAO.selectHouseById(id).isEmpty()){
+            throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
+        }
         houseDAO.deleteHouse(id);
     }
 
     public void updateHouse(int id, House house) {
+        if(houseDAO.selectHouseById(id).isEmpty()){
+            throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
+        }
         houseDAO.updateHouse(id, house);
     }
 }
