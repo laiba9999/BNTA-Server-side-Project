@@ -19,9 +19,9 @@ We used Hikari datasource as the connection pool mechanism as it is lightweight 
 - [Credits to](#Credits-to)
 
 ## Planning
+Before diving into the coding, we spent the first day on planning. 
 
 ### Kanban Board
-Before diving into the coding, we spent the first day on planning. 
 We handled time-management by creating a Kanban Board using Trello which helped us create and assign tasks to each member. We assigned different tasks to allow for individual, in-pair and group work.
 ![Image of the kanban board on trello](/documentation_images/Trello-Kanban-Board.png)
 
