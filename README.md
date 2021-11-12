@@ -104,6 +104,7 @@ Software you will need:
 2. Use the PostgreSQL application to initialise a server by pressing the `Initialize` button and start up the sever by pressing the `Start` button.
 3. Open up a new terminal and use the command `psql` to start up the sever connection then type the command `CREATE DATABASE severside` to create a database called serverside. (Note: This database is needed to run the application)
 4. Go back on Intellij and press the green build button (looks like a hammer) to build and run the application.
+<br/>
 Note: A more detailed version of how to set up will be on the Wiki of this repository.
 
 ## Credits to
