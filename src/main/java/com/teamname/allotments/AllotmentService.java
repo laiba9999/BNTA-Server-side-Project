@@ -1,5 +1,6 @@
 package com.teamname.allotments;
 
+import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class AllotmentService {
     }
 
     public Optional<Allotment> getAllotmentById(int id) {
+        if (allotmentDAO.selectAllotmentById(id).isEmpty()){
+            throw new ResourcesNotFoundException("Allotment with the id: " + id + "not found");
+        }
         return allotmentDAO.selectAllotmentById(id);
     }
 
