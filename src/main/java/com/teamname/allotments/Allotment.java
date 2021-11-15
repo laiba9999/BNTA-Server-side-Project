@@ -1,5 +1,7 @@
 package com.teamname.allotments;
 
+import java.util.Objects;
+
 public class Allotment {
     private Integer id;
     private Integer x_coordinate;
@@ -38,5 +40,16 @@ public class Allotment {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Allotment allotment = (Allotment) o;
+        return Objects.equals(id, allotment.id) && Objects.equals(x_coordinate, allotment.x_coordinate) && Objects.equals(y_coordinate, allotment.y_coordinate);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, x_coordinate, y_coordinate);
+    }
 }
