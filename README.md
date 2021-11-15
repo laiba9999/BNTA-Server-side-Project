@@ -1,20 +1,19 @@
 # BNTA - Server-Side Project (Moop City)
 
-This is a team project that was undertaken during the BNTA Bootcamp where we had to create a backend application
-with an MVP of allowing users to make `GET` and `Post` requests.
-<br/>
-Our application utilises the tech stacks Java, Spring and PostgreSQL to allows users to store information using CRUD operations.
-We had dependencies such as Flyway for version control of our database along with JDBC API so that we can connect and access the database.
-We used Hikari datasource as the connection pool mechanism as it is lightweight and better performing.
+The Server Side Project is a seven-day team project undertaken during the BNTA Bootcamp where we had to create a backend application with an MVP of allowing users to make GET and Post requests. 
+<br/> 
+Our application utilises the tech stacks Java, Spring and PostgreSQL to enable users to store information using CRUD operations. We had dependencies such as Flyway for version control of our database and JDBC API to connect and access the database. We also utilised the Hikari data source as the connection pool mechanism because it is lightweight and better performing.
 
 ## Table Of Contents
 
 - [Planning](#Planning)
 - [Challenges we faced](#Challenges-we-faced)
+- [Testing](#Testing)
 - [What we learnt](#What-we-learnt)
 - [Final Presentation](#Final-Presentation)
 - [Improvements for the future](#Improvements-for-the-future)
 - [How to install](#How-to-install)
+- [How to setup](#How-to-setup)
 - [How to use](#How-to-use)
 - [Credits to](#Credits-to)
 
@@ -55,12 +54,19 @@ During the project, we came across a few challenges. Some challenges were harder
 2. Connection point issues between the classes.
  - This issue came about because we forgot to remove the abstract keyword from a class. This caused a few headaches as when we were trying to debug, we looked at our code multiple times to check if we added the necessary Java Bean annotations to the classes. After awhile, we were able to find the issue and solve it quickly. This is memorable to us because it was a small issue that had big repercussions.
 
+## Testing
+We tested our code using the frameworks JUnit, AssertJ, and Mockito.
+<br/>
+Since we tested our code as we were writing them, we were able to reduce the amount of potential errors that might have occured as our application became more complicated.
+<br/>
+From this we were able to save a lot of time and attempt our challenge implementation.
+
 ## What we learnt
-Overall, this project was a fun and exciting experience. We were able to solidify the content taught in the bootcamp by creating an API that users could interact with. 
+Overall, this project was a fun and exciting experience. We were able to solidify the content taught in the Bootcamp by creating an API that users could interact with. 
 <br/>
-Through this project, we were able to learn how to use Git effectively to work collaboratively in a group as well as creating CRUD operations from scratch. We also practiced writing tests to test our application using the framework JUnit.
+Through this project, we were able to learn how to use Git effectively to work collaboratively in a group and create CRUD operations from scratch. We also practiced writing tests to test our application using the frameworks JUnit, AssertJ and Mokito.
 <br/>
-During the project, we were able to became more adaptable in using each individual members strengths and was also able to learn how to use Flyway effectively.
+During the project, we became more adaptable by utilising each member's strengths and learnt how to write tests effectively to reduce errors from happening later on.
 
 ## Final Presentation
 We presented our project on Thursday 18th November 2021 at 15:00pm to our colleagues at the bootcamp, the instructors and potential clients.
@@ -68,7 +74,7 @@ We presented our project on Thursday 18th November 2021 at 15:00pm to our collea
 The presentation included a description of the application, the reasons behind our choice of topic, the planning stages, a demo of the application, code that we were proud of, and a short Q and A section where we answered questions from the audience.
 <br/>
 ### Slides
-Here are some slides of the presentation.
+Here are the slides from the presentation.
 ![Slide 1](/documentation_images/slide-1.png)
 ![Slide 2](/documentation_images/slide-2.png)
 ![Slide 3](/documentation_images/slide-3.png)
@@ -82,6 +88,11 @@ Here are some slides of the presentation.
 ![Slide 11](/documentation_images/slide-11.png)
 
 ## Improvements for the future
+Rather than starting by building a database that we knew we could build and then wondering what the user experience would be like afterwards it might've been a smoother workflow to start with the user experience first, then work our way backwards to the backend.
+<br/>
+This might've allowed us to avoid the pivot and ultimately save time in our design process.
+<br/>
+Another improvement we would've liked to add was to collate citizens into families. So we could retrieve data on an entire family or find the house id of a specific family.
 
 ## How to install
 
@@ -102,6 +113,10 @@ Software you will need:
 4. Go back on Intellij and press the green build button (looks like a hammer) to build and run the application.
 <br/>
 Note: A more detailed version of how to set up will be on the Wiki of this repository.
+
+## How to use
+
+Please refer to the Wiki section of this repository to learn how to use the application.
 
 ## Credits to
 
