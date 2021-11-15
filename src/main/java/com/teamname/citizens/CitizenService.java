@@ -38,7 +38,7 @@ public class CitizenService {
 //    throw resources not found
     public void deleteCitizen(Integer id) {
         if (citizenDAO.selectCitizenById(id).isEmpty()) {
-            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
+            throw new ResourcesNotFoundException("Citizen with id " + id + " does not exist");
         }
         citizenDAO.deleteCitizen(id);
     }
