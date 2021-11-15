@@ -6,57 +6,107 @@ with an MVP of allowing users to make `GET` and `Post` requests.
 Our application utilises the tech stacks Java, Spring and PostgreSQL to allows users to store information using CRUD operations.
 We had dependencies such as Flyway for version control of our database along with JDBC API so that we can connect and access the database.
 We used Hikari datasource as the connection pool mechanism as it is lightweight and better performing.
-<br/>
-During the project, we came accross some challenges such as getting errors when creating the database and tables along with some 
-connectivity issues between our Java classes which we managed to debug using online resources such as StackOverflow.
 
 ## Table Of Contents
 
 - [Planning](#Planning)
+- [Challenges we faced](#Challenges-we-faced)
+- [What we learnt](#What-we-learnt)
+- [Final Presentation](#Final-Presentation)
+- [Improvements for the future](#Improvements-for-the-future)
 - [How to install](#How-to-install)
 - [How to use](#How-to-use)
 - [Credits to](#Credits-to)
-- [Licences](#Licences)
 
-### Planning
+## Planning
 
+### Kanban Board
 Before diving into the coding, we spent the first day on planning. 
 We handled time-management by creating a Kanban Board using Trello which helped us create and assign tasks to each member. We assigned different tasks to allow for individual, in-pair and group work.
-<br/>
-<br/>
+![Image of the kanban board on trello](/documentation_images/Trello-Kanban-Board.png)
+
+### Relational Database Model
 We created models for our relational database to help structure the information and data into a set of tables. We created links between each table to determine the different relationships such as one-to-one, one-to-many, etc. This helped us visualise our database before creating it.
-<br/>
-<br/>
+![Image of the relational database model](/documentation_images/Miro-Model-Database-Table.png)
+
+### Classes Model
 We had a discussion about the possible classes that we would need including their fields, data type, and methods. Then modelled it using the website Miro.
-<br/>
-<br/>
+
+
+**Citizen Classes**
+![Image of the classes model](/documentation_images/Miro-Citizen-Class-Model.png)
+
+**Allotment Classes**
+![Image of the classes model](/documentation_images/Miro-Allotment-Class-Model.png)
+
+**House Classes**
+![Image of the classes model](/documentation_images/Miro-House-Class-Model.png)
+
+**Workplace Classes**
+![Image of the classes model](/documentation_images/Miro-Workplace-Class-Model.png)
+
 Once this was all planned out and agreed upon, we created this repository to allow us to start programming.
 
-### How to install
+## Challenges we faced
+During the project, we came across a few challenges. Some challenges were harder to solve than others but the most memorable ones were:
+
+1. Creating mock data and using Flyway to track our database.
+ - This was an issue we came across when we were trying to create mock data to test our code. As this was the first challenge we came across that took us more than an hour to fix, it was one of the most memorable since we worked as a team to solved this using both the documentation and StackOverflow.
+
+2. Connection point issues between the classes.
+ - This issue came about because we forgot to remove the abstract keyword from a class. This caused a few headaches as when we were trying to debug, we looked at our code multiple times to check if we added the necessary Java Bean annotations to the classes. After awhile, we were able to find the issue and solve it quickly. This is memorable to us because it was a small issue that had big repercussions.
+
+## What we learnt
+Overall, this project was a fun and exciting experience. We were able to solidify the content taught in the bootcamp by creating an API that users could interact with. 
+<br/>
+Through this project, we were able to learn how to use Git effectively to work collaboratively in a group as well as creating CRUD operations from scratch. We also practiced writing tests to test our application using the framework JUnit.
+<br/>
+During the project, we were able to became more adaptable in using each individual members strengths and was also able to learn how to use Flyway effectively.
+
+## Final Presentation
+We presented our project on Thursday 18th November 2021 at 15:00pm to our colleagues at the bootcamp, the instructors and potential clients.
+<br/>
+The presentation included a description of the application, the reasons behind our choice of topic, the planning stages, a demo of the application, code that we were proud of, and a short Q and A section where we answered questions from the audience.
+<br/>
+### Slides
+Here are some slides of the presentation.
+![Slide 1](/documentation_images/slide-1.png)
+![Slide 2](/documentation_images/slide-2.png)
+![Slide 3](/documentation_images/slide-3.png)
+![Slide 4](/documentation_images/slide-4.png)
+![Slide 5](/documentation_images/slide-5.png)
+![Slide 6](/documentation_images/slide-6.png)
+![Slide 7](/documentation_images/slide-7.png)
+![Slide 8](/documentation_images/slide-8.png)
+![Slide 9](/documentation_images/slide-9.png)
+![Slide 10](/documentation_images/slide-10.png)
+![Slide 11](/documentation_images/slide-11.png)
+
+## Improvements for the future
+
+## How to install
 
   - To install the backend application, press the green `Code` button in this GitHub repository and select the option <br/> `Download Zip`. 
   - Once downloaded, use an unzipper application to unzip the files.
 
-### How to use
+## How to setup
 
-Setup 
-<br/>
+### Setup
 Software you will need:
   - Intelij IDE
   - PostgreSQL
   - Java SE17
-1. Open up Intelij and open the directory you downloaded using the open button in intelij.
-2. Use the PostgreSQL application to initialise and start up the database.
-3. Run the program using intelij.
+
+1. Open up Intellij and open the directory with the files that were downloaded in the install section using the `Open` button in Intellij.
+2. Use the PostgreSQL application to initialise a server by pressing the `Initialize` button and start up the sever by pressing the `Start` button.
+3. Open up a new terminal and use the command `psql` to start up the sever connection then type the command `CREATE DATABASE severside` to create a database called serverside. (Note: This database is needed to run the application)
+4. Go back on Intellij and press the green build button (looks like a hammer) to build and run the application.
+<br/>
 Note: A more detailed version of how to set up will be on the Wiki of this repository.
 
-
-### Credits to
+## Credits to
 
 - Vinh (Me) [Github](https://github.com/vinhchugg)
 - Yacine (Nino) [Github](https://github.com/mechanin)
 - Jonathan [Github](https://github.com/Djontleman)
 - Laiba [Github](https://github.com/laiba9999)
-
-### Licences
-
