@@ -1,6 +1,5 @@
 package com.teamname.citizens;
 
-
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,59 @@ public class CitizenService {
         if (citizenDAO.selectCitizenById(id).equals(Optional.of(citizen))) {
             throw new NotModifiedException("No modifications made to citizen with id " + id);
         }
-        citizenDAO.updateCitizen(id, citizen);
+        if (citizen.getFullName() != null) {
+            citizenDAO.updateCitizenName(id, citizen.getFullName());
+        }
+        if (citizen.getHouse_id() != null) {
+            citizenDAO.updateCitizenHouseId(id, citizen.getHouse_id());
+        }
+        if (citizen.getWorkplace_id() != null) {
+            citizenDAO.updateCitizenWorkplaceId(id, citizen.getWorkplace_id());
+        }
+
+    }
+
+    public void updateCitizenName(Integer id, String name) {
+        if (citizenDAO.selectCitizenById(id).isEmpty()) {
+            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
+        }
+        citizenDAO.updateCitizenName(id, name);
+    }
+
+    public void updateCitizenHouseId(Integer id, Integer house_id) {
+        if (citizenDAO.selectCitizenById(id).isEmpty()) {
+            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
+        }
+        citizenDAO.updateCitizenHouseId(id, house_id);
+    }
+
+    public void updateCitizenWorkplaceId(Integer id, Integer workplace_id) {
+        if (citizenDAO.selectCitizenById(id).isEmpty()) {
+            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
+        }
+        citizenDAO.updateCitizenWorkplaceId(id, workplace_id);
+    }
+
+    public void updateCitizenPatch(Integer id, Citizen updatedCitizen) {
+        if (citizenDAO.selectCitizenById(id).isEmpty()) {
+            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
+        }
+        Optional<Citizen> oldCitizen = citizenDAO.selectCitizenById(id);
+        boolean update = false;
+
+        if (oldCitizen.equals(Optional.of(updatedCitizen))) {
+            throw new NotModifiedException("No modifications made to citizen with id " + id);
+        }
+        if (updatedCitizen.getFullName() != null) {
+            updatedCitizen.setFullName(oldCitizen.get().getFullName());
+        }
+        if (updatedCitizen.getHouse_id() != null) {
+            updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
+        }
+        if (updatedCitizen.getWorkplace_id() != null) {
+            updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
+        }
+        citizenDAO.updateCitizen(id, updatedCitizen);
+
     }
 }

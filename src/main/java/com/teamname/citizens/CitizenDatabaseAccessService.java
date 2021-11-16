@@ -1,6 +1,5 @@
 package com.teamname.citizens;
 
-import com.teamname.allotments.Allotment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -92,7 +91,20 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     }
 
     @Override
-    public int updateCitizen(Integer id, Integer house_id) {
+    public int updateCitizenName(Integer id, String name) {
+        String sql = """
+                UPDATE citizens 
+                SET fullName = ?
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(
+                sql,
+                name,
+                id);
+    }
+
+    @Override
+    public int updateCitizenHouseId(Integer id, Integer house_id) {
         String sql = """
                 UPDATE citizens 
                 SET house_id = ?
@@ -103,4 +115,18 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
                 house_id,
                 id);
     }
+
+    @Override
+    public int updateCitizenWorkplaceId(Integer id, Integer workplace_id) {
+        String sql = """
+                UPDATE citizens 
+                SET workplace_id = ?
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(
+                sql,
+                workplace_id,
+                id);
+    }
+
 }
