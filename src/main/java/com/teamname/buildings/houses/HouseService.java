@@ -4,6 +4,7 @@ import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
 import com.teamname.buildings.workplaces.WorkplaceDAO;
+import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,10 +53,23 @@ public class HouseService {
         houseDAO.deleteHouse(id);
     }
 
-    public void updateHouse(int id, House house) {
+    public void updateHouse(int id, House updatedHouse) {
         if(houseDAO.selectHouseById(id).isEmpty()){
             throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
         }
-        houseDAO.updateHouse(id, house);
+        Optional<House> oldHouse = houseDAO.selectHouseById(id);
+        boolean update = false;
+
+        if (oldHouse.equals(Optional.of(updatedHouse))) {
+            throw new NotModifiedException("No modifications made to house with id " + id);
+        }
+        if (updatedHouse.getBuildingName() == null) {
+            updatedHouse.setBuildingName(oldHouse.get().getBuildingName());
+        }
+        if (updatedHouse.getCapacity() == null) {
+            updatedHouse.setCapacity(oldHouse.get().getCapacity());
+        }
+
+        houseDAO.updateHouse(id, updatedHouse);
     }
 }
