@@ -1,6 +1,5 @@
 package com.teamname.citizens;
 
-import com.teamname.allotments.Allotment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -79,7 +78,7 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     @Override
     public int updateCitizen(Integer id, Citizen citizen) {
         String sql = """
-                UPDATE citizens 
+                UPDATE citizens
                 SET fullName = ?, house_id = ?, workplace_id = ?
                 WHERE id = ?;
                 """;

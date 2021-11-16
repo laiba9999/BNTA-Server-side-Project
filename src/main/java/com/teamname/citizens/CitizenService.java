@@ -1,6 +1,5 @@
 package com.teamname.citizens;
 
-
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +42,27 @@ public class CitizenService {
         citizenDAO.deleteCitizen(id);
     }
 
-//    throws resources not found
-    public void updateCitizen(Integer id, Citizen citizen) {
+    // throw ResourcesNotFound and NotModified
+    public void updateCitizen(Integer id, Citizen updatedCitizen) {
         if (citizenDAO.selectCitizenById(id).isEmpty()) {
             throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
         }
-        if (citizenDAO.selectCitizenById(id).equals(Optional.of(citizen))) {
+        Optional<Citizen> oldCitizen = citizenDAO.selectCitizenById(id);
+        boolean update = false;
+
+        if (oldCitizen.equals(Optional.of(updatedCitizen))) {
             throw new NotModifiedException("No modifications made to citizen with id " + id);
         }
-        citizenDAO.updateCitizen(id, citizen);
+        if (updatedCitizen.getFullName() == null) {
+            updatedCitizen.setFullName(oldCitizen.get().getFullName());
+        }
+        if (updatedCitizen.getHouse_id() == null) {
+            updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
+        }
+        if (updatedCitizen.getWorkplace_id() == null) {
+            updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
+        }
+        citizenDAO.updateCitizen(id, updatedCitizen);
+
     }
 }
