@@ -56,13 +56,22 @@ public class HouseService {
         if(houseDAO.selectHouseById(id).isEmpty()){
             throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
         }
-        Optional<House> oldHouse = houseDAO.selectHouseById(id);
-        boolean update = false; // Not currently used
 
-        if (oldHouse.equals(Optional.of(updatedHouse))) {
+        if ((updatedHouse.getBuildingName() == null || updatedHouse.getBuildingName().length() == 0)
+                && updatedHouse.getCapacity() == null) {
+            throw new IllegalStateException("No content"); // Implementation not complete
+        }
+
+        Optional<House> oldHouse = houseDAO.selectHouseById(id);
+
+        updatedHouse.setId(oldHouse.get().getId());
+        updatedHouse.setAllotment_id(oldHouse.get().getAllotment_id());
+        if (Optional.of(updatedHouse).equals(oldHouse)) {
             throw new NotModifiedException("No modifications made to house with id " + id);
         }
-        if (updatedHouse.getBuildingName() == null) {
+
+
+        if (updatedHouse.getBuildingName() == null || updatedHouse.getBuildingName().length() == 0) {
             updatedHouse.setBuildingName(oldHouse.get().getBuildingName());
         }
         if (updatedHouse.getCapacity() == null) {
