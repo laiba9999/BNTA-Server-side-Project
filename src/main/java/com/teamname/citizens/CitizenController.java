@@ -40,24 +40,4 @@ public class CitizenController {
     public void updateCitizen(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
         citizenService.updateCitizen(id, citizen);
     }
-
-    @PutMapping("{id}/fullname")
-    public void updateCitizenName(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
-        citizenService.updateCitizenName(id, citizen.getFullName());
-    }
-
-    @PutMapping("{id}/house_id")
-    public void updateCitizenHouseId(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
-        citizenService.updateCitizenHouseId(id, citizen.getHouse_id());
-    }
-
-    @PutMapping("{id}/workplace_id")
-    public void updateCitizenWorkplaceId(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
-        citizenService.updateCitizenWorkplaceId(id, citizen.getWorkplace_id());
-    }
-
-    @PatchMapping("{id}")
-    public void updateCitizenPatch(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
-        citizenService.updateCitizenPatch(id, citizen);
-    }
 }

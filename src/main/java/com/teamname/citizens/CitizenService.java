@@ -42,48 +42,8 @@ public class CitizenService {
         citizenDAO.deleteCitizen(id);
     }
 
-//    throws resources not found
-    public void updateCitizen(Integer id, Citizen citizen) {
-        if (citizenDAO.selectCitizenById(id).isEmpty()) {
-            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
-        }
-        if (citizenDAO.selectCitizenById(id).equals(Optional.of(citizen))) {
-            throw new NotModifiedException("No modifications made to citizen with id " + id);
-        }
-        if (citizen.getFullName() != null) {
-            citizenDAO.updateCitizenName(id, citizen.getFullName());
-        }
-        if (citizen.getHouse_id() != null) {
-            citizenDAO.updateCitizenHouseId(id, citizen.getHouse_id());
-        }
-        if (citizen.getWorkplace_id() != null) {
-            citizenDAO.updateCitizenWorkplaceId(id, citizen.getWorkplace_id());
-        }
-
-    }
-
-    public void updateCitizenName(Integer id, String name) {
-        if (citizenDAO.selectCitizenById(id).isEmpty()) {
-            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
-        }
-        citizenDAO.updateCitizenName(id, name);
-    }
-
-    public void updateCitizenHouseId(Integer id, Integer house_id) {
-        if (citizenDAO.selectCitizenById(id).isEmpty()) {
-            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
-        }
-        citizenDAO.updateCitizenHouseId(id, house_id);
-    }
-
-    public void updateCitizenWorkplaceId(Integer id, Integer workplace_id) {
-        if (citizenDAO.selectCitizenById(id).isEmpty()) {
-            throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
-        }
-        citizenDAO.updateCitizenWorkplaceId(id, workplace_id);
-    }
-
-    public void updateCitizenPatch(Integer id, Citizen updatedCitizen) {
+    // throw ResourcesNotFound and NotModified
+    public void updateCitizen(Integer id, Citizen updatedCitizen) {
         if (citizenDAO.selectCitizenById(id).isEmpty()) {
             throw new ResourcesNotFoundException("Citizen with id " + id + "does not exist");
         }

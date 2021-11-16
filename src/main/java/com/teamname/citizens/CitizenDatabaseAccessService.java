@@ -78,7 +78,7 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     @Override
     public int updateCitizen(Integer id, Citizen citizen) {
         String sql = """
-                UPDATE citizens 
+                UPDATE citizens
                 SET fullName = ?, house_id = ?, workplace_id = ?
                 WHERE id = ?;
                 """;
@@ -89,44 +89,4 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
                 citizen.getWorkplace_id(),
                 id);
     }
-
-    @Override
-    public int updateCitizenName(Integer id, String name) {
-        String sql = """
-                UPDATE citizens 
-                SET fullName = ?
-                WHERE id = ?;
-                """;
-        return jdbcTemplate.update(
-                sql,
-                name,
-                id);
-    }
-
-    @Override
-    public int updateCitizenHouseId(Integer id, Integer house_id) {
-        String sql = """
-                UPDATE citizens 
-                SET house_id = ?
-                WHERE id = ?;
-                """;
-        return jdbcTemplate.update(
-                sql,
-                house_id,
-                id);
-    }
-
-    @Override
-    public int updateCitizenWorkplaceId(Integer id, Integer workplace_id) {
-        String sql = """
-                UPDATE citizens 
-                SET workplace_id = ?
-                WHERE id = ?;
-                """;
-        return jdbcTemplate.update(
-                sql,
-                workplace_id,
-                id);
-    }
-
 }
