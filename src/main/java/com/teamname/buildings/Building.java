@@ -48,6 +48,16 @@ public abstract class Building {
     }
 
     @Override
+    public String toString() {
+        return "Building{" +
+                "id=" + id +
+                ", buildingName='" + buildingName + '\'' +
+                ", capacity=" + capacity +
+                ", allotment_id=" + allotment_id +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
