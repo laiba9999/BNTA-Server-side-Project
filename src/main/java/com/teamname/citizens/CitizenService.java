@@ -93,13 +93,13 @@ public class CitizenService {
         if (oldCitizen.equals(Optional.of(updatedCitizen))) {
             throw new NotModifiedException("No modifications made to citizen with id " + id);
         }
-        if (updatedCitizen.getFullName() != null) {
+        if (updatedCitizen.getFullName() == null) {
             updatedCitizen.setFullName(oldCitizen.get().getFullName());
         }
-        if (updatedCitizen.getHouse_id() != null) {
+        if (updatedCitizen.getHouse_id() == null) {
             updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
         }
-        if (updatedCitizen.getWorkplace_id() != null) {
+        if (updatedCitizen.getWorkplace_id() == null) {
             updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
         }
         citizenDAO.updateCitizen(id, updatedCitizen);
