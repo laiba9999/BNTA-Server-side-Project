@@ -42,6 +42,7 @@ public class HouseService {
             }
             allotmentService.getAllotmentById(house.getAllotment_id());
         }
+        houseDAO.createHouse(house);
     }
 
     public void deleteHouse(int id) {
