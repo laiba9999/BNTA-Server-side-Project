@@ -3,6 +3,7 @@ package com.teamname.buildings.workplaces;
 import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
+import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -54,11 +55,24 @@ public class WorkplaceService{
         workplaceDAO.deleteWorkplace(id);
     }
 
-    public void updateWorkplace(int id, Workplace workplace){
+    public void updateWorkplace(int id, Workplace updatedWorkplace){
         if(workplaceDAO.selectWorkplaceById(id).isEmpty()){
             throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
         }
-        workplaceDAO.updateWorkplace(id, workplace);
+        Optional<Workplace> oldWorkplace = workplaceDAO.selectWorkplaceById(id);
+        boolean upodate = false;
+
+        if (oldWorkplace.equals(Optional.of(updatedWorkplace))){
+            throw new NotModifiedException("No modifications made to house with id " + id);
+        }
+        if (updatedWorkplace.getBuildingName() == null) {
+            updatedWorkplace.setBuildingName(oldWorkplace.get().getBuildingName());
+        }
+        if (updatedWorkplace.getCapacity() == null) {
+            updatedWorkplace.setCapacity(oldWorkplace.get().getCapacity());
+        }
+
+        workplaceDAO.updateWorkplace(id, updatedWorkplace);
     }
 
 

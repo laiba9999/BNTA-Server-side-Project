@@ -75,7 +75,11 @@ public class WorkplaceDatabaseAccessService implements WorkplaceDAO {
                 WHERE id = ?
                 ;
                 """;
-        return jdbcTemplate.update(sql, workplace.getBuildingName(), workplace.getCapacity(), workplace.getAllotment_id(), id);
+        return jdbcTemplate.update(sql,
+                workplace.getBuildingName(),
+                workplace.getCapacity(),
+                workplace.getAllotment_id(),
+                id);
     }
 
 }
