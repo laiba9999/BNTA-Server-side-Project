@@ -47,10 +47,13 @@ class HouseServiceTest {
         List<House> actual = houseServiceTest.getAllHouses();
 
         assertThat(actual).isEqualTo(expected);
+
+        verify(houseDAOMock).selectAllHouses();
+        verifyNoMoreInteractions(houseDAOMock);
     }
 
     @Test
-    void selectShouldThrowErrorIfHouseDoesNotExist(){
+    void getHouseByIdShouldThrowErrorIfHouseDoesNotExist(){
         when(houseDAOMock.selectHouseById(1)).thenReturn((Optional.empty()));
         assertThatThrownBy(() -> houseServiceTest.getHouseById(1))
                 .hasMessage("House with id 1 doesn't exist!").isInstanceOf(ResourcesNotFoundException.class);
@@ -61,87 +64,140 @@ class HouseServiceTest {
     }
 
     @Test
-    void getHouseByIdShouldPassDownIDIfIDExists(){
-//        given
-        when(houseDAOMock.selectHouseById(1)).thenReturn(java.util.Optional.of(new House(1, "HouseOne", 5, 1)));
+    void getHouseByIdPassDownIDIfIDExists(){
+        // given
+        when(houseDAOMock.selectHouseById(1))
+                .thenReturn(Optional.of(new House(1, "HouseOne", 5, 1)));
 
-        houseServiceTest.getHouseById(1);
+        // when
+        Optional<House> actual = houseServiceTest.getHouseById(1);
 
-        ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-        verify(houseDAOMock,times(2)).selectHouseById(idArgumentCaptor.capture());
-        Integer idOfSelectedHouse = idArgumentCaptor.getValue();
+        // then
+        assertThat(actual).isEqualTo(Optional.of(new House(1, "HouseOne", 5, 1)));
 
-        assertThat(idOfSelectedHouse).isEqualTo(1);
-    }
-
-    @Test
-    void createHouseShouldThrowErrorIfAllotmentIsTaken(){
-
-        List<Building> fakeBuildings = List.of(
-                new House(1,"HouseOne",5,1),
-                new House(2,"HouseTwo",6,2)
-        );
-        when(buildingServiceMock.getAllBuildings())
-                .thenReturn(fakeBuildings);
-        when(houseDAOMock.createHouse(new House(1,"HouseOne",5,1)))
-                .thenReturn(0);
-        assertThatThrownBy(() -> houseServiceTest.createHouse(new House(1,"HouseOne",5,1)))
-                .hasMessage("Allotment 1 already has a building on it");
-
-        verify(houseDAOMock).createHouse(new House(1,"HouseOne",5,1));
-
+        verify(houseDAOMock, times(2)).selectHouseById(1);
         verifyNoMoreInteractions(houseDAOMock);
     }
 
     @Test
-    void createHouseShouldPassDownHouseIfAllotmentIsFree(){
+    void createHouseShouldThrowErrorIfAllotmentIsTakenByFirstHouseInDatabase(){
+        // given
         List<Building> fakeBuildings = List.of(
                 new House(1,"HouseOne",5,1),
                 new House(2,"HouseTwo",6,2)
         );
         when(buildingServiceMock.getAllBuildings())
                 .thenReturn(fakeBuildings);
-        when(houseDAOMock.createHouse(new House(3,"HouseOne",5,3)))
-                .thenReturn(1);
-        when(allotmentServiceMock.getAllotmentById(3)).thenReturn(Optional.of(new Allotment(3, 1, "C")));
 
+        // when
+        // Nothing to add
+
+        // then
+        assertThatThrownBy(() -> houseServiceTest
+                .createHouse(new House(3,"HouseThree",5,1)))
+                .hasMessage("Allotment 1 already has a building on it");
+
+
+        verify(buildingServiceMock).getAllBuildings();
+        verifyNoMoreInteractions(buildingServiceMock);
+
+        verifyNoInteractions(houseDAOMock);
+    }
+
+    @Test
+    void createHouseShouldThrowErrorIfAllotmentIsTakenBySecondHouseInDatabase(){
+        // given
+        List<Building> fakeBuildings = List.of(
+                new House(1,"HouseOne",5,1),
+                new House(2,"HouseTwo",6,2)
+        );
+        when(buildingServiceMock.getAllBuildings())
+                .thenReturn(fakeBuildings);
+
+        // when
+        // Nothing to add
+
+        // then
+        assertThatThrownBy(() -> houseServiceTest
+                .createHouse(new House(3,"HouseThree",6,2)))
+                .hasMessage("Allotment 2 already has a building on it");
+
+        verify(buildingServiceMock).getAllBuildings();
+        verifyNoMoreInteractions(buildingServiceMock);
+
+        verifyNoInteractions(houseDAOMock);
+    }
+
+    @Test
+    void createHouseShouldPassDownHouseIfAllotmentIsFree(){
+        // given
+        List<Building> fakeBuildings = List.of(
+                new House(1,"HouseOne",5,1),
+                new House(2,"HouseTwo",6,2)
+        );
+        when(buildingServiceMock.getAllBuildings())
+                .thenReturn(fakeBuildings);
+        when(houseDAOMock.createHouse(new House(3,"HouseThree",5,3)))
+                .thenReturn(1);
+
+        // when
         houseServiceTest.createHouse(new House(3,"HouseOne",5,3));
 
-        ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-        verify(allotmentServiceMock,times(2)).getAllotmentById(idArgumentCaptor.capture());
-        Integer allotmentIDOfCreatedHouse = idArgumentCaptor.getValue();
+        // then
+        ArgumentCaptor<House> idArgumentCaptor = ArgumentCaptor.forClass(House.class);
+        verify(houseDAOMock).createHouse(idArgumentCaptor.capture());
+        House createdHouse = idArgumentCaptor.getValue();
 
-        assertThat(allotmentIDOfCreatedHouse).isEqualTo(3);
+        assertThat(createdHouse).isEqualTo(new House(3,"HouseOne",5,3));
 
+        verifyNoMoreInteractions(houseDAOMock);
+
+        verify(buildingServiceMock).getAllBuildings();
+        verifyNoMoreInteractions(buildingServiceMock);
     }
 
     @Test
     void deleteHouseShouldThrowErrorIfIDDoesNotExist(){
+        // given
         when(houseDAOMock.selectHouseById(1)).thenReturn(Optional.empty());
+
+        // when
+        // nothing to add
+
+        // then
         assertThatThrownBy(()-> houseServiceTest.deleteHouse(1))
                 .hasMessage("House with id 1 doesn't exist!")
                 .isInstanceOf(ResourcesNotFoundException.class);
 
         verify(houseDAOMock).selectHouseById(1);
-
         verifyNoMoreInteractions(houseDAOMock);
     }
 
     @Test
     void deleteHouseShouldPassDownIDIfIDDoesExist(){
+        // given
         when(houseDAOMock.deleteHouse(1)).thenReturn(1);
         when(houseDAOMock.selectHouseById(1))
                 .thenReturn(Optional.of(new House(1, "HouseOne", 5, 3)));
 
+        // when
         houseServiceTest.deleteHouse(1);
 
+        // then
         ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
         verify(houseDAOMock).deleteHouse(idArgumentCaptor.capture());
         Integer idOfDeletedHouse = idArgumentCaptor.getValue();
 
         assertThat(idOfDeletedHouse).isEqualTo(1);
+
+        verify(houseDAOMock).selectHouseById(1);
+        verifyNoMoreInteractions(houseDAOMock);
     }
 
+    @Test
+    void updateHouseShouldThrowErrorIfHouseDoesNotExist() {
+
+    }
 
 
 }

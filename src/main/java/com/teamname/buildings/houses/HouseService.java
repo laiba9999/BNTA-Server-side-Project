@@ -36,12 +36,11 @@ public class HouseService {
         return houseDAO.selectHouseById(id);
     }
 
-    public void createHouse(House house) {houseDAO.createHouse(house);
-        for(Building building: buildingService.getAllBuildings() ){
-            if (building.getAllotment_id() == house.getAllotment_id()){
+    public void createHouse(House house) {
+        for (Building building: buildingService.getAllBuildings()){
+            if (building.getAllotment_id().equals(house.getAllotment_id())){
                 throw new IllegalStateException("Allotment "+house.getAllotment_id()+" already has a building on it");
             }
-            allotmentService.getAllotmentById(house.getAllotment_id());
         }
         houseDAO.createHouse(house);
     }
@@ -58,7 +57,7 @@ public class HouseService {
             throw new ResourcesNotFoundException("House with id "+id+" doesn't exist!");
         }
         Optional<House> oldHouse = houseDAO.selectHouseById(id);
-        boolean update = false;
+        boolean update = false; // Not currently used
 
         if (oldHouse.equals(Optional.of(updatedHouse))) {
             throw new NotModifiedException("No modifications made to house with id " + id);
