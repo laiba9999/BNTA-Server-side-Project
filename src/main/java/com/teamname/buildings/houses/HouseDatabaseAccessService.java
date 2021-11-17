@@ -55,9 +55,12 @@ public class HouseDatabaseAccessService implements HouseDAO {
 
     @Override
     public int updateHouse(int id, House house) {
-//        Todo check allotment is full before updating
         String sql = "UPDATE houses SET buildingName = ?, capacity = ?, allotment_id = ? WHERE id = ?;";
 
-        return jdbcTemplate.update(sql, house.getBuildingName(),house.getCapacity(),house.getAllotment_id(),id);
+        return jdbcTemplate.update(sql,
+                house.getBuildingName(),
+                house.getCapacity(),
+                house.getAllotment_id(),
+                id);
     }
 }

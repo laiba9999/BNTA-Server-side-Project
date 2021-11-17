@@ -3,6 +3,10 @@ package com.teamname.buildings.workplaces;
 import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
+import com.teamname.buildings.houses.House;
+import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
+import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +17,12 @@ import java.util.Optional;
 public class WorkplaceService{
     private WorkplaceDAO workplaceDAO;
     private BuildingService buildingService;
-    private AllotmentService allotmentService;
+    private CitizenDAO citizenDAO;
 
-    public WorkplaceService(WorkplaceDAO workplaceDAO, BuildingService buildingService, AllotmentService allotmentService) {
+    public WorkplaceService(WorkplaceDAO workplaceDAO, BuildingService buildingService, CitizenDAO citizenDAO) {
         this.workplaceDAO = workplaceDAO;
         this.buildingService = buildingService;
-        this.allotmentService = allotmentService;
+        this.citizenDAO = citizenDAO;
     }
 
     public List<Workplace> getAllWorkplace() {
@@ -27,22 +31,17 @@ public class WorkplaceService{
 
     public Optional<Workplace> getWorkplaceById(int id) {
         if(workplaceDAO.selectWorkplaceById(id).isEmpty()){
-            throw new ResourcesNotFoundException("Workplace with id: "+ id + "is not found");
+            throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
         }
         return workplaceDAO.selectWorkplaceById(id);
     }
 
     public void createWorkplace(Workplace workplace) {
-//        buildingService.getAllBuildings().forEach(p ->
-//            if(p.getAllotment_id()==workplace.getAllotment_id()){
-//
-//        })
-
+        //does workplace exist
         for (Building building : buildingService.getAllBuildings()) {
             if (building.getAllotment_id() == workplace.getAllotment_id()) {
                 throw new IllegalStateException("Allotment "+workplace.getAllotment_id()+" already has a building on it");
             }
-            allotmentService.getAllotmentById(workplace.getAllotment_id());
         }
         workplaceDAO.createWorkplace(workplace);
     }
@@ -54,11 +53,44 @@ public class WorkplaceService{
         workplaceDAO.deleteWorkplace(id);
     }
 
-    public void updateWorkplace(int id, Workplace workplace){
+    public void updateWorkplace(int id, Workplace updatedWorkplace) {
         if(workplaceDAO.selectWorkplaceById(id).isEmpty()){
-            throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
+            throw new ResourcesNotFoundException("Workplace with id "+id+" doesn't exist!");
         }
-        workplaceDAO.updateWorkplace(id, workplace);
+
+        if ((updatedWorkplace.getBuildingName() == null || updatedWorkplace.getBuildingName().length() == 0)
+                && updatedWorkplace.getCapacity() == null) {
+            throw new IllegalStateException("No content"); // Implementation not complete
+        }
+
+        Optional<Workplace> oldWorkplace = workplaceDAO.selectWorkplaceById(id);
+
+        updatedWorkplace.setId(oldWorkplace.get().getId());
+        updatedWorkplace.setAllotment_id(oldWorkplace.get().getAllotment_id());
+        if (Optional.of(updatedWorkplace).equals(oldWorkplace)) {
+            throw new NotModifiedException("No modifications made to workplace with id " + id);
+        }
+
+
+        if (updatedWorkplace.getBuildingName() == null || updatedWorkplace.getBuildingName().length() == 0) {
+            updatedWorkplace.setBuildingName(oldWorkplace.get().getBuildingName());
+        }
+        if (updatedWorkplace.getCapacity() == null) {
+            updatedWorkplace.setCapacity(oldWorkplace.get().getCapacity());
+        } else {
+            Integer citizenCount = 0;
+            for (Citizen citizenInDatabase : citizenDAO.selectAllCitizens()) {
+                if (citizenInDatabase.getHouse_id().equals(id)) {
+                    citizenCount++;
+                }
+            }
+            if (citizenCount > updatedWorkplace.getCapacity()) {
+                throw new IllegalStateException("Reduced capacity less than number of citizens in workplace. " +
+                        "Number of citizens is " + citizenCount);
+            }
+        }
+
+        workplaceDAO.updateWorkplace(id, updatedWorkplace);
     }
 
 

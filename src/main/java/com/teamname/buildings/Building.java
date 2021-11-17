@@ -1,5 +1,7 @@
 package com.teamname.buildings;
 
+import java.util.Objects;
+
 public abstract class Building {
     private Integer id;
     private String buildingName;
@@ -44,4 +46,28 @@ public abstract class Building {
     public void setAllotment_id(Integer allotment_id) {
         this.allotment_id = allotment_id;
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "id=" + id +
+                ", buildingName='" + buildingName + '\'' +
+                ", capacity=" + capacity +
+                ", allotment_id=" + allotment_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return Objects.equals(id, building.id) && Objects.equals(buildingName, building.buildingName) && Objects.equals(capacity, building.capacity) && Objects.equals(allotment_id, building.allotment_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, buildingName, capacity, allotment_id);
+    }
+
 }

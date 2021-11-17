@@ -13,9 +13,6 @@ public class Allotment {
         this.y_coordinate = y_coordinate;
     }
 
-    public Allotment() {
-    }
-
     public Integer getId() {
         return id;
     }
@@ -38,6 +35,15 @@ public class Allotment {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Allotment{" +
+                "id=" + id +
+                ", x_coordinate=" + x_coordinate +
+                ", y_coordinate='" + y_coordinate + '\'' +
+                '}';
     }
 
     @Override
