@@ -3,6 +3,7 @@ package com.teamname.buildings.workplaces;
 import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
+import com.teamname.buildings.houses.House;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.stereotype.Service;
@@ -51,17 +52,26 @@ public class WorkplaceService{
         workplaceDAO.deleteWorkplace(id);
     }
 
-    public void updateWorkplace(int id, Workplace updatedWorkplace){
+    public void updateWorkplace(int id, Workplace updatedWorkplace) {
         if(workplaceDAO.selectWorkplaceById(id).isEmpty()){
-            throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
+            throw new ResourcesNotFoundException("Workplace with id "+id+" doesn't exist!");
         }
-        Optional<Workplace> oldWorkplace = workplaceDAO.selectWorkplaceById(id);
-        boolean update = false;
 
-        if (oldWorkplace.equals(Optional.of(updatedWorkplace))){
+        if ((updatedWorkplace.getBuildingName() == null || updatedWorkplace.getBuildingName().length() == 0)
+                && updatedWorkplace.getCapacity() == null) {
+            throw new IllegalStateException("No content"); // Implementation not complete
+        }
+
+        Optional<Workplace> oldWorkplace = workplaceDAO.selectWorkplaceById(id);
+
+        updatedWorkplace.setId(oldWorkplace.get().getId());
+        updatedWorkplace.setAllotment_id(oldWorkplace.get().getAllotment_id());
+        if (Optional.of(updatedWorkplace).equals(oldWorkplace)) {
             throw new NotModifiedException("No modifications made to workplace with id " + id);
         }
-        if (updatedWorkplace.getBuildingName() == null) {
+
+
+        if (updatedWorkplace.getBuildingName() == null || updatedWorkplace.getBuildingName().length() == 0) {
             updatedWorkplace.setBuildingName(oldWorkplace.get().getBuildingName());
         }
         if (updatedWorkplace.getCapacity() == null) {

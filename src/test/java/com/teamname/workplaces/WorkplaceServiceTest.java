@@ -174,7 +174,7 @@ public class WorkplaceServiceTest {
         // then
         assertThatThrownBy(() -> workplaceServiceTest
                 .updateWorkplace(1, updatedWorkplace))
-                .hasMessage("Workplace with id: 1 is not found")
+                .hasMessage("Workplace with id 1 doesn't exist!")
                 .isInstanceOf(ResourcesNotFoundException.class);
 
         verify(workplaceDAOMock).selectWorkplaceById(1);
@@ -324,43 +324,6 @@ public class WorkplaceServiceTest {
         verify(workplaceDAOMock).selectWorkplaceById(1);
         verifyNoMoreInteractions(workplaceDAOMock);
     }
-//
-//    @Test //Update: is Exception thrown
-//    void updateWorkplaceShouldThrowAnExceptionForUpdateWorkplaceIfIdDoesNotExist(){
-//        when(workplaceDAOMock
-//                .selectWorkplaceById(2))
-//                .thenReturn((Optional.empty()));
-//
-//
-//        assertThatThrownBy(() -> workplaceServiceTest.updateWorkplace(2, new Workplace(2, "JP Office", 3, 3)))
-//                .hasMessage("Workplace with id: 2 is not found")
-//                .isInstanceOf(ResourcesNotFoundException.class);
-//
-//        verify(workplaceDAOMock).selectWorkplaceById(2);
-//
-//        verifyNoMoreInteractions(workplaceDAOMock);
-//    }
-//
-//    void updateWorkplaceShouldPassWorkplaceIdThroughServiceIntoDAO(){
-//        when(workplaceDAOMock.updateWorkplace(2, new Workplace(2, "JP Office", 3, 3)))
-//                .thenReturn(1);
-//        when(workplaceDAOMock.selectWorkplaceById(2))
-//                .thenReturn(java.util.Optional.of(new Workplace(2, "JP Office", 3, 3)));
-//
-//        workplaceServiceTest.updateWorkplace(2, new Workplace(2, "JP Office", 3, 3));
-//
-//        ArgumentCaptor<Integer> idArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-//        ArgumentCaptor<Workplace> workplaceArgumentCaptor = ArgumentCaptor.forClass(Workplace.class);
-//
-//        verify(workplaceDAOMock).updateWorkplace(idArgumentCaptor.capture(), workplaceArgumentCaptor.capture());
-//
-//        Integer idOfUpdatedWorkplace = idArgumentCaptor.getValue();
-//        Workplace insertedWorkplace = workplaceArgumentCaptor.getValue();
-//
-//        assertThat(idOfUpdatedWorkplace).isEqualTo(2);
-//        assertThat(insertedWorkplace).isEqualTo(new Workplace(2, "JP Office", 3, 3));
-//
-//    }
 
 
 }
