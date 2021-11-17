@@ -22,7 +22,7 @@ public class AllotmentService {
 
     public Optional<Allotment> getAllotmentById(int id) {
         if (allotmentDAO.selectAllotmentById(id).isEmpty()){
-            throw new ResourcesNotFoundException("Allotment with the id: " + id + "not found");
+            throw new ResourcesNotFoundException("Allotment with the id " + id + " not found");
         }
         return allotmentDAO.selectAllotmentById(id);
     }

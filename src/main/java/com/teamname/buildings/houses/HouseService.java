@@ -1,5 +1,9 @@
 package com.teamname.buildings.houses;
 
+import com.teamname.allotments.AllotmentService;
+import com.teamname.buildings.Building;
+import com.teamname.buildings.BuildingService;
+import com.teamname.buildings.workplaces.WorkplaceDAO;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +14,15 @@ import java.util.Optional;
 @Service
 public class HouseService {
     private HouseDAO houseDAO;
+    private BuildingService buildingService;
+    private AllotmentService allotmentService;
 
-    @Autowired
-    public HouseService(HouseDAO houseDAO) {
+    public HouseService(HouseDAO houseDAO, BuildingService buildingService, AllotmentService allotmentService) {
         this.houseDAO = houseDAO;
+        this.buildingService = buildingService;
+        this.allotmentService = allotmentService;
     }
+
 
     public List<House> getAllHouses() {
         return houseDAO.selectAllHouses();
@@ -28,6 +36,12 @@ public class HouseService {
     }
 
     public void createHouse(House house) {houseDAO.createHouse(house);
+        for(Building building: buildingService.getAllBuildings() ){
+            if (building.getAllotment_id() == house.getAllotment_id()){
+                throw new IllegalStateException("Allotment "+house.getAllotment_id()+" already has a building on it");
+            }
+            allotmentService.getAllotmentById(house.getAllotment_id());
+        }
     }
 
     public void deleteHouse(int id) {
