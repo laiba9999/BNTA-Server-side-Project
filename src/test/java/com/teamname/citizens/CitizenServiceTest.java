@@ -1,6 +1,8 @@
 package com.teamname.citizens;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.teamname.buildings.houses.HouseService;
+import com.teamname.buildings.workplaces.WorkplaceService;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +18,15 @@ import static org.mockito.Mockito.*;
 class CitizenServiceTest {
     private CitizenDAO citizenDAOMock;
     private CitizenService citizenServiceTest;
+    private HouseService houseServiceMock;
+    private WorkplaceService workplaceServiceMock;
 
     @BeforeEach
     void setUp() {
         citizenDAOMock = mock(CitizenDAO.class);
-        citizenServiceTest = new CitizenService(citizenDAOMock);
+        houseServiceMock = mock(HouseService.class);
+        workplaceServiceMock = mock(WorkplaceService.class);
+        citizenServiceTest = new CitizenService(citizenDAOMock, houseServiceMock, workplaceServiceMock);
         }
 
     @Test
