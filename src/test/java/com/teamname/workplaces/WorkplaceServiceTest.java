@@ -1,13 +1,11 @@
 package com.teamname.workplaces;
-
-import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
-import com.teamname.buildings.houses.House;
 import com.teamname.buildings.workplaces.Workplace;
 import com.teamname.buildings.workplaces.WorkplaceDAO;
 import com.teamname.buildings.workplaces.WorkplaceService;
 import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +14,6 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -25,19 +21,18 @@ import static org.mockito.Mockito.*;
 public class WorkplaceServiceTest {
     private WorkplaceDAO workplaceDAOMock;
     private BuildingService buildingService;
-    private AllotmentService allotmentService;
+    private CitizenDAO citizenDAOMock;
     private WorkplaceService workplaceServiceTest;
 
     @BeforeEach
     void setUp(){
         workplaceDAOMock = mock(WorkplaceDAO.class);
         buildingService = mock(BuildingService.class);
-        allotmentService = mock(AllotmentService.class);
-        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, allotmentService);
+        citizenDAOMock = mock(CitizenDAO.class);
+        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, citizenDAOMock);
     }
 
     @Test //r
-    //getting all workplaces as a List of Workplaces
     void listWorkplaceShouldReturnListOfWorkplaces(){
         //Given
         //List of fake Workplaces are created
@@ -325,5 +320,24 @@ public class WorkplaceServiceTest {
         verifyNoMoreInteractions(workplaceDAOMock);
     }
 
+    @Test
+    void updateWorkplaceShouldThrowExceptionIfNewCapacityIsLessThanCount(){
+        List<Citizen> fakeCitizens = List.of(
+                new Citizen(1,"Name",1,1),
+                new Citizen(2,"Name2",1,1),
+                new Citizen(3,"Name3",1,1)
+        );
+        Workplace fakeWorkplace = new Workplace(1,"HouseName",3,1);
+        Workplace updatedWorkplace = new Workplace(1,"HouseName",2,1);
+        when(citizenDAOMock.selectAllCitizens()).thenReturn(fakeCitizens);
+        when(workplaceDAOMock.selectWorkplaceById(1)).thenReturn(Optional.of(fakeWorkplace));
 
+        assertThatThrownBy(() -> workplaceServiceTest.updateWorkplace(1,updatedWorkplace))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Reduced capacity less than number of citizens in workplace. " +
+                        "Number of citizens is 3");
+
+        verify(workplaceDAOMock,times(2)).selectWorkplaceById(1);
+        verifyNoMoreInteractions(workplaceDAOMock);
+    }
 }

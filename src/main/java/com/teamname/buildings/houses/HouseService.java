@@ -1,12 +1,11 @@
 package com.teamname.buildings.houses;
 
-import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
-import com.teamname.buildings.workplaces.WorkplaceDAO;
+import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +15,12 @@ import java.util.Optional;
 public class HouseService {
     private HouseDAO houseDAO;
     private BuildingService buildingService;
-    private AllotmentService allotmentService;
+    private CitizenDAO citizenDAO;
 
-    public HouseService(HouseDAO houseDAO, BuildingService buildingService, AllotmentService allotmentService) {
+    public HouseService(HouseDAO houseDAO, BuildingService buildingService, CitizenDAO citizenDAO) {
         this.houseDAO = houseDAO;
         this.buildingService = buildingService;
-        this.allotmentService = allotmentService;
+        this.citizenDAO = citizenDAO;
     }
 
 
@@ -76,6 +75,17 @@ public class HouseService {
         }
         if (updatedHouse.getCapacity() == null) {
             updatedHouse.setCapacity(oldHouse.get().getCapacity());
+        } else {
+            Integer citizenCount = 0;
+            for (Citizen citizenInDatabase : citizenDAO.selectAllCitizens()) {
+                if (citizenInDatabase.getHouse_id().equals(id)) {
+                    citizenCount++;
+                }
+            }
+            if (citizenCount > updatedHouse.getCapacity()) {
+                throw new IllegalStateException("Reduced capacity less than number of citizens in house. " +
+                        "Number of citizens is " + citizenCount);
+            }
         }
 
         houseDAO.updateHouse(id, updatedHouse);

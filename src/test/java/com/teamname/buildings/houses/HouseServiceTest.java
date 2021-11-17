@@ -1,12 +1,12 @@
 package com.teamname.buildings.houses;
 
-import com.teamname.allotments.Allotment;
-import com.teamname.allotments.AllotmentService;
+
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
+import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,21 +16,20 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class HouseServiceTest {
     private HouseDAO houseDAOMock;
     private BuildingService buildingServiceMock;
-    private AllotmentService allotmentServiceMock;
+    private CitizenDAO citizenDAOMock;
     private HouseService houseServiceTest;
 
     @BeforeEach
     void setUp(){
         buildingServiceMock = mock(BuildingService.class);
-        allotmentServiceMock = mock(AllotmentService.class);
+        citizenDAOMock = mock(CitizenDAO.class);
         houseDAOMock = mock(HouseDAO.class);
-        houseServiceTest = new HouseService(houseDAOMock,buildingServiceMock,allotmentServiceMock);
+        houseServiceTest = new HouseService(houseDAOMock,buildingServiceMock,citizenDAOMock);
     }
 
     @Test
@@ -91,7 +90,6 @@ class HouseServiceTest {
                 .thenReturn(fakeBuildings);
 
         // when
-        // Nothing to add
 
         // then
         assertThatThrownBy(() -> houseServiceTest
@@ -362,5 +360,27 @@ class HouseServiceTest {
 
         verify(houseDAOMock).selectHouseById(1);
         verifyNoMoreInteractions(houseDAOMock);
+
     }
+    @Test
+    void updateHouseShouldThrowExceptionIfNewCapacityIsLessThanCount(){
+        List<Citizen> fakeCitizens = List.of(
+                new Citizen(1,"Name",1,2),
+                new Citizen(2,"Name2",1,3),
+                new Citizen(3,"Name3",1,4)
+                );
+        House fakeHouse = new House(1,"HouseName",3,1);
+        House updatedHouse = new House(1,"HouseName",2,1);
+        when(citizenDAOMock.selectAllCitizens()).thenReturn(fakeCitizens);
+        when(houseDAOMock.selectHouseById(1)).thenReturn(Optional.of(fakeHouse));
+
+        assertThatThrownBy(() -> houseServiceTest.updateHouse(1,updatedHouse))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Reduced capacity less than number of citizens in house. " +
+                        "Number of citizens is 3");
+
+        verify(houseDAOMock,times(2)).selectHouseById(1);
+        verifyNoMoreInteractions(houseDAOMock);
+    }
+
 }

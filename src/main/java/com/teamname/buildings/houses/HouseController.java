@@ -1,6 +1,4 @@
 package com.teamname.buildings.houses;
-
-import com.teamname.allotments.Allotment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
