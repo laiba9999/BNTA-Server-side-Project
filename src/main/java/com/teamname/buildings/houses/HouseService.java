@@ -1,15 +1,11 @@
 package com.teamname.buildings.houses;
 
-import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
-import com.teamname.buildings.workplaces.WorkplaceDAO;
 import com.teamname.citizens.Citizen;
 import com.teamname.citizens.CitizenDAO;
-import com.teamname.citizens.CitizenService;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

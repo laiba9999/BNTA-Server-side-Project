@@ -1,9 +1,6 @@
 package com.teamname.workplaces;
-
-import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
-import com.teamname.buildings.houses.House;
 import com.teamname.buildings.workplaces.Workplace;
 import com.teamname.buildings.workplaces.WorkplaceDAO;
 import com.teamname.buildings.workplaces.WorkplaceService;
@@ -17,8 +14,6 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -38,7 +33,6 @@ public class WorkplaceServiceTest {
     }
 
     @Test //r
-    //getting all workplaces as a List of Workplaces
     void listWorkplaceShouldReturnListOfWorkplaces(){
         //Given
         //List of fake Workplaces are created

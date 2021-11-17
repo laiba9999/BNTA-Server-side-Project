@@ -1,15 +1,10 @@
 package com.teamname.citizens;
-
-import com.teamname.buildings.BuildingService;
 import com.teamname.buildings.houses.HouseService;
-import com.teamname.buildings.workplaces.Workplace;
 import com.teamname.buildings.workplaces.WorkplaceService;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +35,6 @@ public class CitizenService {
 
     public void insertCitizen(Citizen citizen) {
         if(citizen.getHouse_id() != null) {
-            // Initial implementation
-//            if (houseService.getHouseById(citizen.getHouse_id()).get().getCitizenCount()
-//                    >= houseService.getHouseById(citizen.getHouse_id()).get().getCapacity()) {
-//                throw new IllegalStateException("House is at max capacity");
-//            }
 
             Integer houseCount = 0;
             for (Citizen citizenInDatabase : getAllCitizens()) {

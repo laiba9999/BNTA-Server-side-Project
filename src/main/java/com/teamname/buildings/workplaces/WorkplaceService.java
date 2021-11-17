@@ -1,9 +1,7 @@
 package com.teamname.buildings.workplaces;
 
-import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
-import com.teamname.buildings.houses.House;
 import com.teamname.citizens.Citizen;
 import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;

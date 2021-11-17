@@ -1,15 +1,12 @@
 package com.teamname.buildings.houses;
 
-import com.teamname.allotments.Allotment;
-import com.teamname.allotments.AllotmentService;
+
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
 import com.teamname.citizens.Citizen;
 import com.teamname.citizens.CitizenDAO;
-import com.teamname.citizens.CitizenService;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +16,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class HouseServiceTest {
@@ -94,7 +90,6 @@ class HouseServiceTest {
                 .thenReturn(fakeBuildings);
 
         // when
-        // Nothing to add
 
         // then
         assertThatThrownBy(() -> houseServiceTest
