@@ -26,15 +26,15 @@ import static org.mockito.Mockito.*;
 public class WorkplaceServiceTest {
     private WorkplaceDAO workplaceDAOMock;
     private BuildingService buildingService;
-    private CitizenDAO citizenDAO;
+    private CitizenDAO citizenDAOMock;
     private WorkplaceService workplaceServiceTest;
 
     @BeforeEach
     void setUp(){
         workplaceDAOMock = mock(WorkplaceDAO.class);
         buildingService = mock(BuildingService.class);
-        citizenDAO = mock(CitizenDAO.class);
-        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, citizenDAO);
+        citizenDAOMock = mock(CitizenDAO.class);
+        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, citizenDAOMock);
     }
 
     @Test //r
@@ -326,5 +326,24 @@ public class WorkplaceServiceTest {
         verifyNoMoreInteractions(workplaceDAOMock);
     }
 
+    @Test
+    void updateWorkplaceShouldThrowExceptionIfNewCapacityIsLessThanCount(){
+        List<Citizen> fakeCitizens = List.of(
+                new Citizen(1,"Name",1,1),
+                new Citizen(2,"Name2",1,1),
+                new Citizen(3,"Name3",1,1)
+        );
+        Workplace fakeWorkplace = new Workplace(1,"HouseName",3,1);
+        Workplace updatedWorkplace = new Workplace(1,"HouseName",2,1);
+        when(citizenDAOMock.selectAllCitizens()).thenReturn(fakeCitizens);
+        when(workplaceDAOMock.selectWorkplaceById(1)).thenReturn(Optional.of(fakeWorkplace));
 
+        assertThatThrownBy(() -> workplaceServiceTest.updateWorkplace(1,updatedWorkplace))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Reduced capacity less than number of citizens in workplace. " +
+                        "Number of citizens is 3");
+
+        verify(workplaceDAOMock,times(2)).selectWorkplaceById(1);
+        verifyNoMoreInteractions(workplaceDAOMock);
+    }
 }
