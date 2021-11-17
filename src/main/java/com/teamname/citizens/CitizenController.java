@@ -21,8 +21,15 @@ public class CitizenController {
         return citizenService.getAllCitizens();
     }
 
-    @GetMapping("{houseID}")
-    public List<Citizen> getCitizensOfHouse(@PathVariable("houseID") Integer houseID) {return citizenService.getCitizensOfHouse(houseID);}
+    @GetMapping("ofHouse/{houseID}")
+    public List<Citizen> getCitizensOfHouse(@PathVariable("houseID") Integer houseID) {
+        return citizenService.getCitizensOfHouse(houseID);
+    }
+
+    @GetMapping("ofWorkplace/{workplaceID}")
+    public List<Citizen> getCitizensOfWorkplace(@PathVariable("workplaceID") Integer workplaceID) {
+        return citizenService.getCitizensOfWorkplace(workplaceID);}
+
 
     @GetMapping("{id}")
     public Optional<Citizen> getCitizenById(@PathVariable("id") Integer id) {

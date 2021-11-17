@@ -15,4 +15,6 @@ public interface CitizenDAO {
     int updateCitizen(Integer id, Citizen citizen);
 
     List<Citizen> selectCitizensOfHouse(Integer houseID);
+
+    List<Citizen> selectCitizensOfWorkplace(Integer workplaceID);
 }

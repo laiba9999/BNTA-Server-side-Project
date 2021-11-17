@@ -29,6 +29,9 @@ public class CitizenService {
         return citizenDAO.selectCitizensOfHouse(houseID);
     }
 
+    public List<Citizen> getCitizensOfWorkplace(Integer workplaceID) {
+        return citizenDAO.selectCitizensOfWorkplace(workplaceID);
+    }
 //    throw resources not found error
     public Optional<Citizen> getCitizenById(Integer id) {
         if (citizenDAO.selectCitizenById(id).isEmpty()) {
@@ -127,6 +130,5 @@ public class CitizenService {
         }
         citizenDAO.updateCitizen(id, updatedCitizen);
     }
-
 
 }
