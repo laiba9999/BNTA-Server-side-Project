@@ -58,9 +58,6 @@ public class CitizenService {
         Optional<Citizen> oldCitizen = citizenDAO.selectCitizenById(id);
 
         updatedCitizen.setId(oldCitizen.get().getId());
-        updatedCitizen.setFullName(oldCitizen.get().getFullName());
-        updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
-        updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
         if (Optional.of(updatedCitizen).equals(oldCitizen)) {
             throw new NotModifiedException("No modifications made to citizen with id " + id);
         }
