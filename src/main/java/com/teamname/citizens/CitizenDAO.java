@@ -13,4 +13,6 @@ public interface CitizenDAO {
     int deleteCitizen(int id);
 
     int updateCitizen(Integer id, Citizen citizen);
+
+    List<Citizen> selectCitizensOfHouse(Integer houseID);
 }

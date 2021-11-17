@@ -41,6 +41,17 @@ public class CitizenDatabaseAccessService implements CitizenDAO {
     }
 
     @Override
+    public List<Citizen> selectCitizensOfHouse(Integer houseID){
+        String sql = """
+                SELECT *
+                FROM citizens
+                WHERE house_id = ?;
+                """;
+
+        return jdbcTemplate.query(sql, rowMapper, houseID);
+    }
+
+    @Override
     public Optional<Citizen> selectCitizenById(Integer id) {
         String sql = """
                 SELECT *

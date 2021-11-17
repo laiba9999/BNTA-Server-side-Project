@@ -21,6 +21,9 @@ public class CitizenController {
         return citizenService.getAllCitizens();
     }
 
+    @GetMapping("{houseID}")
+    public List<Citizen> getCitizensOfHouse(@PathVariable("houseID") Integer houseID) {return citizenService.getCitizensOfHouse(houseID);}
+
     @GetMapping("{id}")
     public Optional<Citizen> getCitizenById(@PathVariable("id") Integer id) {
         return citizenService.getCitizenById(id);
@@ -40,4 +43,6 @@ public class CitizenController {
     public void updateCitizen(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
         citizenService.updateCitizen(id, citizen);
     }
+
+
 }
