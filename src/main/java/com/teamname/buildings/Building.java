@@ -69,4 +69,5 @@ public abstract class Building {
     public int hashCode() {
         return Objects.hash(id, buildingName, capacity, allotment_id);
     }
+
 }

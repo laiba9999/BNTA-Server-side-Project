@@ -28,17 +28,13 @@ public class WorkplaceService{
 
     public Optional<Workplace> getWorkplaceById(int id) {
         if(workplaceDAO.selectWorkplaceById(id).isEmpty()){
-            throw new ResourcesNotFoundException("Workplace with id: "+ id + "is not found");
+            throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
         }
         return workplaceDAO.selectWorkplaceById(id);
     }
 
     public void createWorkplace(Workplace workplace) {
-//        buildingService.getAllBuildings().forEach(p ->
-//            if(p.getAllotment_id()==workplace.getAllotment_id()){
-//
-//        })
-
+        //does workplace exist
         for (Building building : buildingService.getAllBuildings()) {
             if (building.getAllotment_id() == workplace.getAllotment_id()) {
                 throw new IllegalStateException("Allotment "+workplace.getAllotment_id()+" already has a building on it");
@@ -60,10 +56,10 @@ public class WorkplaceService{
             throw new ResourcesNotFoundException("Workplace with id: "+ id + " is not found");
         }
         Optional<Workplace> oldWorkplace = workplaceDAO.selectWorkplaceById(id);
-        boolean upodate = false;
+        boolean update = false;
 
         if (oldWorkplace.equals(Optional.of(updatedWorkplace))){
-            throw new NotModifiedException("No modifications made to house with id " + id);
+            throw new NotModifiedException("No modifications made to workplace with id " + id);
         }
         if (updatedWorkplace.getBuildingName() == null) {
             updatedWorkplace.setBuildingName(oldWorkplace.get().getBuildingName());
