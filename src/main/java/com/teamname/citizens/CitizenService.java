@@ -41,7 +41,9 @@ public class CitizenService {
     }
 
     public void insertCitizen(Citizen citizen) {
-        // name validation
+        if (citizen.getFullName() == null || citizen.getFullName().length() == 0) {
+            throw new IllegalStateException("Name cannot be empty");
+        }
 
         if(citizen.getHouse_id() != null) {
 
