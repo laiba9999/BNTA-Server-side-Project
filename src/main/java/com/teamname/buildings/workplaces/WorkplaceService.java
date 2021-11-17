@@ -4,6 +4,8 @@ import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
 import com.teamname.buildings.houses.House;
+import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,12 @@ import java.util.Optional;
 public class WorkplaceService{
     private WorkplaceDAO workplaceDAO;
     private BuildingService buildingService;
-    private AllotmentService allotmentService;
+    private CitizenDAO citizenDAO;
 
-    public WorkplaceService(WorkplaceDAO workplaceDAO, BuildingService buildingService, AllotmentService allotmentService) {
+    public WorkplaceService(WorkplaceDAO workplaceDAO, BuildingService buildingService, CitizenDAO citizenDAO) {
         this.workplaceDAO = workplaceDAO;
         this.buildingService = buildingService;
-        this.allotmentService = allotmentService;
+        this.citizenDAO = citizenDAO;
     }
 
     public List<Workplace> getAllWorkplace() {
@@ -40,7 +42,6 @@ public class WorkplaceService{
             if (building.getAllotment_id() == workplace.getAllotment_id()) {
                 throw new IllegalStateException("Allotment "+workplace.getAllotment_id()+" already has a building on it");
             }
-            allotmentService.getAllotmentById(workplace.getAllotment_id());
         }
         workplaceDAO.createWorkplace(workplace);
     }
@@ -76,6 +77,17 @@ public class WorkplaceService{
         }
         if (updatedWorkplace.getCapacity() == null) {
             updatedWorkplace.setCapacity(oldWorkplace.get().getCapacity());
+        } else {
+            Integer citizenCount = 0;
+            for (Citizen citizenInDatabase : citizenDAO.selectAllCitizens()) {
+                if (citizenInDatabase.getHouse_id().equals(id)) {
+                    citizenCount++;
+                }
+            }
+            if (citizenCount > updatedWorkplace.getCapacity()) {
+                throw new IllegalStateException("Reduced capacity less than number of citizens in workplace. " +
+                        "Number of citizens is " + citizenCount);
+            }
         }
 
         workplaceDAO.updateWorkplace(id, updatedWorkplace);

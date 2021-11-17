@@ -8,6 +8,7 @@ import com.teamname.buildings.workplaces.Workplace;
 import com.teamname.buildings.workplaces.WorkplaceDAO;
 import com.teamname.buildings.workplaces.WorkplaceService;
 import com.teamname.citizens.Citizen;
+import com.teamname.citizens.CitizenDAO;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,15 +26,15 @@ import static org.mockito.Mockito.*;
 public class WorkplaceServiceTest {
     private WorkplaceDAO workplaceDAOMock;
     private BuildingService buildingService;
-    private AllotmentService allotmentService;
+    private CitizenDAO citizenDAO;
     private WorkplaceService workplaceServiceTest;
 
     @BeforeEach
     void setUp(){
         workplaceDAOMock = mock(WorkplaceDAO.class);
         buildingService = mock(BuildingService.class);
-        allotmentService = mock(AllotmentService.class);
-        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, allotmentService);
+        citizenDAO = mock(CitizenDAO.class);
+        workplaceServiceTest = new WorkplaceService(workplaceDAOMock, buildingService, citizenDAO);
     }
 
     @Test //r

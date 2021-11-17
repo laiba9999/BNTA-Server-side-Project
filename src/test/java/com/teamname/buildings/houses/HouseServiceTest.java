@@ -4,6 +4,8 @@ import com.teamname.allotments.Allotment;
 import com.teamname.allotments.AllotmentService;
 import com.teamname.buildings.Building;
 import com.teamname.buildings.BuildingService;
+import com.teamname.citizens.CitizenDAO;
+import com.teamname.citizens.CitizenService;
 import com.teamname.exceptions.NotModifiedException;
 import com.teamname.exceptions.ResourcesNotFoundException;
 import net.bytebuddy.asm.Advice;
@@ -22,15 +24,15 @@ import static org.mockito.Mockito.*;
 class HouseServiceTest {
     private HouseDAO houseDAOMock;
     private BuildingService buildingServiceMock;
-    private AllotmentService allotmentServiceMock;
+    private CitizenDAO citizenDAOMock;
     private HouseService houseServiceTest;
 
     @BeforeEach
     void setUp(){
         buildingServiceMock = mock(BuildingService.class);
-        allotmentServiceMock = mock(AllotmentService.class);
+        citizenDAOMock = mock(CitizenDAO.class);
         houseDAOMock = mock(HouseDAO.class);
-        houseServiceTest = new HouseService(houseDAOMock,buildingServiceMock,allotmentServiceMock);
+        houseServiceTest = new HouseService(houseDAOMock,buildingServiceMock,citizenDAOMock);
     }
 
     @Test
