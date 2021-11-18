@@ -17,19 +17,15 @@ public class CitizenController {
     }
 
     @GetMapping
-    public List<Citizen> getAllCitizens() {
-        return citizenService.getAllCitizens();
+    public List<Citizen> getAllCitizens(@RequestParam(required = false) Integer house_id, @RequestParam(required = false) Integer workplace_id) {
+        if (house_id == null && workplace_id == null) {
+            return citizenService.getAllCitizens();
+        } else if (house_id != null) {
+            return citizenService.getCitizensOfHouse(house_id);
+        } else {
+            return citizenService.getCitizensOfWorkplace(workplace_id);
+        }
     }
-
-    @GetMapping("ofHouse/{houseID}")
-    public List<Citizen> getCitizensOfHouse(@PathVariable("houseID") Integer houseID) {
-        return citizenService.getCitizensOfHouse(houseID);
-    }
-
-    @GetMapping("ofWorkplace/{workplaceID}")
-    public List<Citizen> getCitizensOfWorkplace(@PathVariable("workplaceID") Integer workplaceID) {
-        return citizenService.getCitizensOfWorkplace(workplaceID);}
-
 
     @GetMapping("{id}")
     public Optional<Citizen> getCitizenById(@PathVariable("id") Integer id) {
