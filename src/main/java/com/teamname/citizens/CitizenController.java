@@ -17,8 +17,14 @@ public class CitizenController {
     }
 
     @GetMapping
-    public List<Citizen> getAllCitizens() {
-        return citizenService.getAllCitizens();
+    public List<Citizen> getAllCitizens(@RequestParam(required = false) Integer house_id, @RequestParam(required = false) Integer workplace_id) {
+        if (house_id == null && workplace_id == null) {
+            return citizenService.getAllCitizens();
+        } else if (house_id != null) {
+            return citizenService.getCitizensOfHouse(house_id);
+        } else {
+            return citizenService.getCitizensOfWorkplace(workplace_id);
+        }
     }
 
     @GetMapping("{id}")
@@ -40,4 +46,6 @@ public class CitizenController {
     public void updateCitizen(@PathVariable("id") Integer id, @RequestBody Citizen citizen) {
         citizenService.updateCitizen(id, citizen);
     }
+
+
 }

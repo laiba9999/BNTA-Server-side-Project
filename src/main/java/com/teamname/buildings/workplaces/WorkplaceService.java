@@ -37,7 +37,7 @@ public class WorkplaceService{
     public void createWorkplace(Workplace workplace) {
         //does workplace exist
         for (Building building : buildingService.getAllBuildings()) {
-            if (building.getAllotment_id() == workplace.getAllotment_id()) {
+            if (building.getAllotment_id().equals(workplace.getAllotment_id())) {
                 throw new IllegalStateException("Allotment "+workplace.getAllotment_id()+" already has a building on it");
             }
         }

@@ -25,6 +25,13 @@ public class CitizenService {
         return citizenDAO.selectAllCitizens();
     }
 
+    public List<Citizen> getCitizensOfHouse(Integer houseID) {
+        return citizenDAO.selectCitizensOfHouse(houseID);
+    }
+
+    public List<Citizen> getCitizensOfWorkplace(Integer workplaceID) {
+        return citizenDAO.selectCitizensOfWorkplace(workplaceID);
+    }
 //    throw resources not found error
     public Optional<Citizen> getCitizenById(Integer id) {
         if (citizenDAO.selectCitizenById(id).isEmpty()) {
@@ -34,6 +41,10 @@ public class CitizenService {
     }
 
     public void insertCitizen(Citizen citizen) {
+        if (citizen.getFullName() == null || citizen.getFullName().length() == 0) {
+            throw new IllegalStateException("Name cannot be empty");
+        }
+
         if(citizen.getHouse_id() != null) {
 
             Integer houseCount = 0;
@@ -77,8 +88,8 @@ public class CitizenService {
         }
 
         if ((updatedCitizen.getFullName() == null || updatedCitizen.getFullName().length() == 0)
-                && (updatedCitizen.getHouse_id() == null || updatedCitizen.getHouse_id() == 0)
-                && (updatedCitizen.getWorkplace_id() == null || updatedCitizen.getWorkplace_id() == 0)) {
+                && (updatedCitizen.getHouse_id() == null)
+                && (updatedCitizen.getWorkplace_id() == null)) {
             throw new IllegalStateException("No content"); // Implementation not complete
         }
 
@@ -94,8 +105,14 @@ public class CitizenService {
             updatedCitizen.setFullName(oldCitizen.get().getFullName());
         }
 
-        if (updatedCitizen.getHouse_id() == null || updatedCitizen.getHouse_id() == 0) {
-            updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
+        if (updatedCitizen.getHouse_id() == null) {
+            if (oldCitizen.get().getHouse_id() == 0) {
+                updatedCitizen.setHouse_id(null);
+            } else {
+                updatedCitizen.setHouse_id(oldCitizen.get().getHouse_id());
+            }
+        } else if (updatedCitizen.getHouse_id() == 0) {
+            updatedCitizen.setHouse_id(null);
         } else {
             Integer houseCount = 0;
             for (Citizen citizenInDatabase : getAllCitizens()) {
@@ -108,8 +125,14 @@ public class CitizenService {
             }
         }
 
-        if (updatedCitizen.getWorkplace_id() == null || updatedCitizen.getWorkplace_id() == 0){
-            updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
+        if (updatedCitizen.getWorkplace_id() == null) {
+            if (oldCitizen.get().getWorkplace_id() == 0) {
+                updatedCitizen.setWorkplace_id(null);
+            } else {
+                updatedCitizen.setWorkplace_id(oldCitizen.get().getWorkplace_id());
+            }
+        } else if (updatedCitizen.getWorkplace_id() == 0){
+            updatedCitizen.setWorkplace_id(null);
         } else {
             Integer workplaceCount = 0;
             for (Citizen citizenInDatabase : getAllCitizens()) {
@@ -123,4 +146,5 @@ public class CitizenService {
         }
         citizenDAO.updateCitizen(id, updatedCitizen);
     }
+
 }
